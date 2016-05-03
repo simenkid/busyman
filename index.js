@@ -283,8 +283,8 @@ _.cloneDeep = function (collection) {
 
 // console.log(y);
 
-// _.get = function () {};
-// _.merge = function () {};
+_.get = function () {};
+_.merge = function () {};
 
 // // array
 // _.concat = function () {};
@@ -298,8 +298,9 @@ _.cloneDeep = function (collection) {
 // _.take = function () {};
 // // collection
 // _.filter = function () {};
-// _.find = function () {};
-// _.map = function () {};
+_.find = function () {};
+_.map = function () {};
+_.isEqual = function () {};
 // _.reject = function () {};
 // _.some = function () {};
 // _.now = function () {};
