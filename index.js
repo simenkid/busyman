@@ -1,76 +1,72 @@
-var busyman = {};
+var _ = {};
 
-busyman.isArray = Array.isArray;
+_.isArray = Array.isArray;
+_.isNaN = isNaN;
+_.isBuffer = Buffer.isBuffer;
+_.isInteger = Number.isInteger;
 
-busyman.isBuffer = Buffer.isBuffer;
-
-busyman.isInteger = Number.isInteger;
-
-busyman.isNaN = isNaN;
-
-busyman.isUndefined = function (val) {
-    return (undefined === val);
-};
-
-busyman.isNull = function (val) {
-    return (null === val);
-};
-
-busyman.isNil = function (val) {
-    return this.isUndefined(val) || this.isNull(val);
-};
-
-busyman.isBoolean = function (val) {
+_.isBoolean = function (val) {
     return (typeof val === 'boolean');
 };
 
-busyman.isString = function (val) {
+_.isNumber = function (val) {
+    return (typeof val === 'number');
+};
+
+_.isString = function (val) {
     return (typeof val === 'string');
 };
 
-busyman.isFunction = function (val) {
+_.isFunction = function (val) {
     return (typeof val === 'function');
 };
 
-busyman.isNumber = function (val) {
-    return (typeof val === 'number');
+_.isUndefined = function (val) {
+    return (undefined === val);
 };
-busyman.isObject = function (val) {
+
+_.isNull = function (val) {
+    return (null === val);
+};
+
+_.isNil = function (val) {
+    return ((undefined === val) || (null === val));
+};
+
+_.isObjectLike = function (val) {
+    return !!val && typeof val === 'object';
+};
+
+_.isObject = function (val) {
     // null is considered not an object
     return (typeof val === 'object' && val !== null);
 };
 
-busyman.isObjectLike = function (val) {
-    return !!val && typeof val == 'object';
+_.isPlainObject = function (val) {
+    // an object, not null, not array, not from Class
 };
 
-busyman.isEmpty = function (val) {
+_.isEmpty = function (val) {
     var empty = false;
 
-    if (this.isObject(val))
-        empty = !!this.keys(val).length;
-    else if (this.isArray(val) || this.isString(val))
+    if (_.isObject(val))
+        empty = !!_.keys(val).length;
+    else if (_.isArray(val) || _.isString(val))
         empty = !!val.length;
-    else if (this.isString(val))
-        empty = !!val.length;
-    else if (this.isNil(val))
+    else if (_.isNil(val))
         empty = true;
 
     return empty;
 };
 
-busyman.isPlainObject = function (val) {
-    return (this.isObject(val) && !this.isArray(val));
-};
-
 // object
-busyman.assign = Object.assign;
+_.assign = Object.assign;
+_.keys = Object.keys;
 
-busyman.forOwn = function (obj, iter) { // iter(val, key, obj)
+_.forOwn = function (obj, iter) { // iter(val, key, obj)
     var returned = true;
 
     for (var key in obj) {
-        console.log('key: ' + key);
         if (obj.hasOwnProperty(key))
             returned = iter(obj[key], key, obj);
             
@@ -79,13 +75,34 @@ busyman.forOwn = function (obj, iter) { // iter(val, key, obj)
     }
 };
 
+_.omit = function (obj, props) {
+    var copied = _.clone(obj);
 
-busyman.keys = Object.keys;
-busyman.merge = function () {};
-busyman.omit = function () {};
-busyman.pick = function () {};
+    if (_.isString(props))
+        props = [ props ];
 
-busyman.set = function (obj, path, val) {
+    _.forEach(props, function (prop) {
+        delete copied[prop];
+    });
+
+    return copied;
+};  // return new object (shallow copy)
+
+_.pick = function (obj, props) {
+    var copied = {};
+
+    if (_.isString(props))
+        props = [ props ];
+
+    _.forEach(props, function (prop) {
+        if (!_.isUndefined(obj[prop]))
+            copied[prop] = obj[prop];
+    });
+
+    return copied;
+};  // return new object (shallow copy)
+
+_.set = function (obj, path, val) {
     var self = this,
         allocated = obj,
         lastObj,
@@ -107,44 +124,34 @@ busyman.set = function (obj, path, val) {
 
 
     if (allocated === undefined || Object.keys(allocated).length === 0) {
-        console.log(allocated);
-        console.log('xxxxxxxx');
         lastObj[lastKey] = val;
     }
 
     return obj;
 };
 
-
-busyman.get = function () {};
-busyman.has = function (obj, path) {
+_.has = function (obj, path) {
     var has = true,
-        allocated = obj;
+        target = obj;
 
     path = this.toPath(path);
 
-    this.forEach(path, function (key) {
-        if (allocated.hasOwnProperty(key)) {
-            allocated = allocated[key];
-        } else {
+    _.forEach(path, function (key) {
+        if (!_.isObject(target)) {
             has = false;
             return false;
+        } else if (!(key in target)) {
+            has = false;
+            return false;
+        } else {
+            target = target[key];
         }
     });
 
     return has;
 };
 
-// array
-busyman.concat = function () {};
-busyman.drop = function () {};
-busyman.dropRight = function () {};
-busyman.findIndex = function () {};
-busyman.indexOf = function () {};
-busyman.join = function () {};
-busyman.pull = function () {};
-
-busyman.remove = function (arr, pred) {
+_.remove = function (arr, pred) {
     var i,
         hit = false,
         len = arr.length,
@@ -162,14 +169,7 @@ busyman.remove = function (arr, pred) {
     return removed;
 };
 
-busyman.slice = function () {};
-busyman.take = function () {};
-
-// collection
-busyman.filter = function () {};
-busyman.find = function () {};
-
-busyman.forEach = function (collection, iter) {
+_.forEach = function (collection, iter) {
     if (this.isPlainObject(collection))
         return this.forOwn(collection, iter);
 
@@ -183,10 +183,24 @@ busyman.forEach = function (collection, iter) {
     }
 };
 
-busyman.includes = function () {};
-busyman.map = function () {};
-busyman.reject = function () {};
-busyman.size = function (val) {
+_.includes = function (collection, val) {
+    var included = false;
+
+    if (_.isString(collection)) {
+        included = collection.includes(val);
+    } else if (_.isArray(collection) || _.isObject(collection)) {
+        _.forEach(collection, function (item) {
+            if (item === val) {
+                included = true;
+                return false;   //  break the loop
+            }
+        });
+    }
+
+    return included;
+};
+
+_.size = function (val) {
     var s = 0;
 
     if (val === null)
@@ -201,32 +215,13 @@ busyman.size = function (val) {
     return size;
 
 };
-busyman.some = function () {};
-busyman.now = function () {};
 
-// function
-busyman.bind = function () {};
-busyman.delay = function () {};
-busyman.spread = function () {};
-busyman.wrap = function () {};
-
-// string
-busyman.endsWith = function () {};
-busyman.lowerCase = function () {};
-busyman.lowerFirst = function () {};
-busyman.parseInt = function () {};
-busyman.replace = function () {};
-busyman.split = function (str, separator, limit) {
+_.split = function (str, separator, limit) {
     return str.split(separator, limit);
 };
-busyman.startsWith = function () {};
-busyman.toLower = function () {};
-busyman.toUpper = function () {};
-busyman.upperCase = function () {};
-busyman.upperFirst = function () {};
 
 // util
-busyman.toPath = function (str) {
+_.toPath = function (str) {
     var pathArr;
 
     if (this.isArray(str)) {
@@ -243,7 +238,87 @@ busyman.toPath = function (str) {
     return pathArr;
 };
 
-busyman.clone = function () {};
-busyman.cloneDeep = function () {};
+_.clone = function (collection) {
+    var copied;
 
-module.exports = busyman;
+    if (_.isArray(collection))
+        copied = [];
+    else if (_.isObject)
+        copied = {};
+
+    if (copied) {
+        _.forEach(collection, function (val, key) {
+            copied[key] = val;
+        });
+    }
+
+    return copied;
+};  // shallow copy
+
+_.cloneDeep = function (collection) {
+    var copied;
+
+    if (_.isArray(collection))
+        copied = [];
+    else if (_.isObject)
+        copied = {};
+
+    if (copied) {
+        _.forEach(collection, function (val, key) {
+            copied[key] = _.cloneDeep(val);
+        });
+    }
+
+    return copied;
+};  // deep copy
+
+
+// var x = {
+//     a: '1',
+//     b: 'xxx',
+//     c: [ {x:1}, {x:2}, {x:{ a:1, b:{ x: [ 1, { '1': 77 }, 3 ]} } }]
+// };
+
+// var y = _.has(x, 'c[2].x.b.x[1][1]');
+
+// console.log(y);
+
+// _.get = function () {};
+// _.merge = function () {};
+
+// // array
+// _.concat = function () {};
+// _.drop = function () {};
+// _.dropRight = function () {};
+// _.findIndex = function () {};
+// _.indexOf = function () {};
+// _.join = function () {};
+// _.pull = function () {};
+// _.slice = function () {};
+// _.take = function () {};
+// // collection
+// _.filter = function () {};
+// _.find = function () {};
+// _.map = function () {};
+// _.reject = function () {};
+// _.some = function () {};
+// _.now = function () {};
+// // function
+// _.bind = function () {};
+// _.delay = function () {};
+// _.spread = function () {};
+// _.wrap = function () {};
+
+// // string
+// _.endsWith = function () {};
+// _.lowerCase = function () {};
+// _.lowerFirst = function () {};
+// _.parseInt = function () {};
+// _.replace = function () {};
+// _.startsWith = function () {};
+// _.toLower = function () {};
+// _.toUpper = function () {};
+// _.upperCase = function () {};
+// _.upperFirst = function () {};
+
+module.exports = _;
