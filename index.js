@@ -42,10 +42,6 @@ _.isObject = function (val) {
     return (typeof val === 'object' && val !== null);
 };
 
-_.isPlainObject = function (val) {
-    // an object, not null, not array, not from Class
-};
-
 _.isEmpty = function (val) {
     var empty = false;
 
@@ -62,6 +58,7 @@ _.isEmpty = function (val) {
 // object
 _.assign = Object.assign;
 _.keys = Object.keys;
+_.values = Object.values;
 
 _.forOwn = function (obj, iter) { // iter(val, key, obj)
     var returned = true;
@@ -102,6 +99,7 @@ _.pick = function (obj, props) {
     return copied;
 };  // return new object (shallow copy)
 
+// objbox
 _.set = function (obj, path, val) {
     var self = this,
         allocated = obj,
@@ -169,6 +167,7 @@ _.remove = function (arr, pred) {
     return removed;
 };
 
+// objbox
 _.forEach = function (collection, iter) {
     if (this.isPlainObject(collection))
         return this.forOwn(collection, iter);
@@ -283,8 +282,38 @@ _.cloneDeep = function (collection) {
 
 // console.log(y);
 
-_.get = function () {};
-_.merge = function () {};
+_.isPlainObject = function (val) {
+    // an object, not null, not array, not from Class
+};
+
+// objbox
+_.get = function (obj, path) {
+    var has = true,
+        target = obj;
+
+    path = this.toPath(path);
+
+    _.forEach(path, function (key) {
+        if (!_.isObject(target)) {
+            has = false;
+            return false;
+        } else if (!(key in target)) {
+            has = false;
+            return false;
+        } else {
+            target = target[key];
+        }
+    });
+
+    return has ? target : undefined;
+};
+
+// objbox
+_.merge = function (dstObj, srcObj) {
+
+};
+
+
 
 // // array
 // _.concat = function () {};
@@ -297,9 +326,34 @@ _.merge = function () {};
 // _.slice = function () {};
 // _.take = function () {};
 // // collection
-// _.filter = function () {};
-_.find = function () {};
-_.map = function () {};
+_.filter = function (colleciton, pred) {
+    var result = [];
+
+    _.forEach(colleciton, function (val, idx) {
+        if (pred(val, idx, colleciton))
+            result.push(colleciton[key]);
+    });
+
+    return result;
+};
+
+_.find = function (colleciton, pred) {
+    var result;
+
+    _.forEach(colleciton, function (val, idx) {
+        if (pred(val, idx, colleciton)) {
+            result = (colleciton[key]);
+            return false;   // break the loop
+        }
+    });
+
+    return result;
+};
+
+_.map = function (elems, fn) {
+    return Array.prototype.map.call(elems, fn);
+};
+
 _.isEqual = function () {};
 // _.reject = function () {};
 // _.some = function () {};
