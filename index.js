@@ -320,8 +320,9 @@ _.merge = function (dstObj, srcObj) {
 // _.drop = function () {};
 // _.dropRight = function () {};
 // _.findIndex = function () {};
-// _.indexOf = function () {};
+_.indexOf = function () {};
 // _.join = function () {};
+_.last = function () {};
 // _.pull = function () {};
 // _.slice = function () {};
 // _.take = function () {};
@@ -357,6 +358,7 @@ _.map = function (elems, fn) {
 _.isEqual = function () {};
 // _.reject = function () {};
 // _.some = function () {};
+_.sortBy = function () {};
 // _.now = function () {};
 // // function
 // _.bind = function () {};
@@ -365,12 +367,13 @@ _.isEqual = function () {};
 // _.wrap = function () {};
 
 // // string
+_.camelCase = function () {};
 // _.endsWith = function () {};
 // _.lowerCase = function () {};
 // _.lowerFirst = function () {};
-// _.parseInt = function () {};
+_.parseInt = function () {};
 // _.replace = function () {};
-// _.startsWith = function () {};
+_.startsWith = function () {};
 // _.toLower = function () {};
 // _.toUpper = function () {};
 // _.upperCase = function () {};
