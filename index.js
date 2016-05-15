@@ -1,8 +1,14 @@
 var _ = {};
 
+/*************************************************************************************************/
+/*** Type Check                                                                                ***/
+/*************************************************************************************************/
 _.isArray = Array.isArray;
+
 _.isNaN = isNaN;
+
 _.isBuffer = Buffer.isBuffer;
+
 _.isInteger = Number.isInteger;
 
 _.isBoolean = function (val) {
@@ -42,22 +48,17 @@ _.isObject = function (val) {
     return (typeof val === 'object' && val !== null);
 };
 
-_.isEmpty = function (val) {
-    var empty = false;
-
-    if (_.isObject(val))
-        empty = !!_.keys(val).length;
-    else if (_.isArray(val) || _.isString(val))
-        empty = !!val.length;
-    else if (_.isNil(val))
-        empty = true;
-
-    return empty;
+_.isPlainObject = function (val) {
+    // an object, not null, not array, not from Class
 };
 
-// object
+/*************************************************************************************************/
+/*** Object                                                                                    ***/
+/*************************************************************************************************/
 _.assign = Object.assign;
+
 _.keys = Object.keys;
+
 _.values = Object.values;
 
 _.forOwn = function (obj, iter) { // iter(val, key, obj)
@@ -99,7 +100,6 @@ _.pick = function (obj, props) {
     return copied;
 };  // return new object (shallow copy)
 
-// objbox
 _.set = function (obj, path, val) {
     var self = this,
         allocated = obj,
@@ -167,7 +167,6 @@ _.remove = function (arr, pred) {
     return removed;
 };
 
-// objbox
 _.forEach = function (collection, iter) {
     if (this.isPlainObject(collection))
         return this.forOwn(collection, iter);
@@ -219,24 +218,6 @@ _.split = function (str, separator, limit) {
     return str.split(separator, limit);
 };
 
-// util
-_.toPath = function (str) {
-    var pathArr;
-
-    if (this.isArray(str)) {
-        pathArr = str.map(function (val) {
-            return val.toString();
-        });
-    } else if (this.isString(str)) {
-        pathArr = str.split(/\.|\[|\]/);
-        this.remove(pathArr, function (p) {
-            return (p === '');
-        });
-    }
-
-    return pathArr;
-};
-
 _.clone = function (collection) {
     var copied;
 
@@ -271,22 +252,6 @@ _.cloneDeep = function (collection) {
     return copied;
 };  // deep copy
 
-
-// var x = {
-//     a: '1',
-//     b: 'xxx',
-//     c: [ {x:1}, {x:2}, {x:{ a:1, b:{ x: [ 1, { '1': 77 }, 3 ]} } }]
-// };
-
-// var y = _.has(x, 'c[2].x.b.x[1][1]');
-
-// console.log(y);
-
-_.isPlainObject = function (val) {
-    // an object, not null, not array, not from Class
-};
-
-// objbox
 _.get = function (obj, path) {
     var has = true,
         target = obj;
@@ -308,29 +273,13 @@ _.get = function (obj, path) {
     return has ? target : undefined;
 };
 
-// objbox
 _.merge = function (dstObj, srcObj) {
 
 };
 
-
-
-// // array
-// _.concat = function () {};
-// _.drop = function () {};
-// _.dropRight = function () {};
-// _.findIndex = function () {};
-_.indexOf = function (elems, value) {
-    Array.prototype.indexOf.call(elems, value);
-};
-// _.join = function () {};
-_.last = function (elems) {
-    return elems[elems.length - 1];
-};
-// _.pull = function () {};
-// _.slice = function () {};
-// _.take = function () {};
-// // collection
+/*************************************************************************************************/
+/*** Collection                                                                                ***/
+/*************************************************************************************************/
 _.filter = function (colleciton, pred) {
     var result;
 
@@ -365,22 +314,59 @@ _.find = function (colleciton, pred) {
     return result;
 };
 
+/*************************************************************************************************/
+/*** Array                                                                                     ***/
+/*************************************************************************************************/
+_.concat = function () {
+    return Array.prototype.concat.call(arguments);
+};
+// _.drop = function () {};
+// _.dropRight = function () {};
+_.findIndex = function () {
+    return Array.prototype.findIndex.call(arguments);
+};
+
+_.indexOf = function (elems, value) {
+    Array.prototype.indexOf.call(elems, value);
+};
+
+_.join = function () {
+    return Array.prototype.join.call(arguments);
+};
+
+_.last = function (elems) {
+    return elems[elems.length - 1];
+};
+
+// _.pull = function () {};
+// _.slice = function () {};
+// _.take = function () {};
+
 _.map = function (elems, fn) {
     return Array.prototype.map.call(elems, fn);
 };
 
 _.isEqual = function () {};
+
 // _.reject = function () {};
 // _.some = function () {};
+
 _.sortBy = function () {};
 // _.now = function () {};
-// // function
+
+/*************************************************************************************************/
+/*** Function                                                                                  ***/
+/*************************************************************************************************/
 // _.bind = function () {};
 // _.delay = function () {};
 // _.spread = function () {};
 // _.wrap = function () {};
 
-// // string
+/*************************************************************************************************/
+/*** String                                                                                    ***/
+/*************************************************************************************************/
+_.parseInt = parseInt;
+
 _.camelCase = function (str) {
     var result;
     // replace -, _ with  (space)
@@ -395,17 +381,63 @@ _.camelCase = function (str) {
     });
 
 };
-// _.endsWith = function () {};
-// _.lowerCase = function () {};
-// _.lowerFirst = function () {};
-_.parseInt = parseInt;
-// _.replace = function () {};
+
+_.endsWith = function () {
+    return String.prototype.endsWith.call(arguments);
+};
+
+_.replace = function () {
+    return String.prototype.replace.call(arguments);
+};
+
 _.startsWith = function () {
     return String.prototype.startsWith.call(arguments);
 };
-// _.toLower = function () {};
-// _.toUpper = function () {};
+
+_.toLower = function () {
+    return String.prototype.toLowerCase.call(arguments);
+};
+
+_.toUpper = function () {
+    return String.prototype.toUpperCase.call(arguments);
+};
+
+// _.lowerCase = function () {};
+// _.lowerFirst = function () {};
 // _.upperCase = function () {};
 // _.upperFirst = function () {};
+
+/*************************************************************************************************/
+/*** Utils                                                                                     ***/
+/*************************************************************************************************/
+_.isEmpty = function (val) {
+    var empty = false;
+
+    if (_.isObject(val))
+        empty = !!_.keys(val).length;
+    else if (_.isArray(val) || _.isString(val))
+        empty = !!val.length;
+    else if (_.isNil(val))
+        empty = true;
+
+    return empty;
+};
+
+_.toPath = function (str) {
+    var pathArr;
+
+    if (this.isArray(str)) {
+        pathArr = str.map(function (val) {
+            return val.toString();
+        });
+    } else if (this.isString(str)) {
+        pathArr = str.split(/\.|\[|\]/);
+        this.remove(pathArr, function (p) {
+            return (p === '');
+        });
+    }
+
+    return pathArr;
+};
 
 module.exports = _;
