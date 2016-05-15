@@ -320,20 +320,30 @@ _.merge = function (dstObj, srcObj) {
 // _.drop = function () {};
 // _.dropRight = function () {};
 // _.findIndex = function () {};
-_.indexOf = function () {};
+_.indexOf = function (elems, value) {
+    Array.prototype.indexOf.call(elems, value);
+};
 // _.join = function () {};
-_.last = function () {};
+_.last = function (elems) {
+    return elems[elems.length - 1];
+};
 // _.pull = function () {};
 // _.slice = function () {};
 // _.take = function () {};
 // // collection
 _.filter = function (colleciton, pred) {
-    var result = [];
+    var result;
 
-    _.forEach(colleciton, function (val, idx) {
-        if (pred(val, idx, colleciton))
-            result.push(colleciton[key]);
-    });
+    if (_.isArray(colleciton)) {
+        result = Array.prototype.filter.call(colleciton, pred);
+    } else {
+        result = [];
+
+        _.forEach(colleciton, function (val, key) {
+            if (pred(val, key, colleciton))
+                result.push(colleciton[key]);
+        });
+    }
 
     return result;
 };
@@ -341,12 +351,16 @@ _.filter = function (colleciton, pred) {
 _.find = function (colleciton, pred) {
     var result;
 
-    _.forEach(colleciton, function (val, idx) {
-        if (pred(val, idx, colleciton)) {
-            result = (colleciton[key]);
-            return false;   // break the loop
-        }
-    });
+    if (_.isArray(colleciton)) {
+        result = Array.prototype.find.call(colleciton, pred);
+    } else {
+        _.forEach(colleciton, function (val, idx) {
+            if (pred(val, idx, colleciton)) {
+                result = (colleciton[key]);
+                return false;   // break the loop
+            }
+        });
+    }
 
     return result;
 };
@@ -367,13 +381,28 @@ _.sortBy = function () {};
 // _.wrap = function () {};
 
 // // string
-_.camelCase = function () {};
+_.camelCase = function (str) {
+    var result;
+    // replace -, _ with  (space)
+    str = str.replace(/-/g, ' ');
+    str = str.replace(/_/g, ' ');
+    str = str.trim();
+
+    str = str.split(' ');
+
+    _.forEach(str, function () {
+        // 1st lower case, ... Uppercae, then concat all
+    });
+
+};
 // _.endsWith = function () {};
 // _.lowerCase = function () {};
 // _.lowerFirst = function () {};
-_.parseInt = function () {};
+_.parseInt = parseInt;
 // _.replace = function () {};
-_.startsWith = function () {};
+_.startsWith = function () {
+    return String.prototype.startsWith.call(arguments);
+};
 // _.toLower = function () {};
 // _.toUpper = function () {};
 // _.upperCase = function () {};
