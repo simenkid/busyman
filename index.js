@@ -50,6 +50,26 @@ _.isObject = function (val) {
 
 _.isPlainObject = function (val) {
     // an object, not null, not array, not from Class
+    var proto,
+        validConstr,
+        validProto,
+        preCheckPass = _.isObject(val) && !_.isArray(val) && Object.prototype.toString.call(o) === '[object Object]';
+
+    if (!preCheckPass)
+        return false;
+
+    validConstr = (typeof val.constructor === 'function');
+
+    if (!validConstr)
+        return false;
+
+    proto = val.constructor.prototype;
+    validProto = _.isObject(proto);
+
+    if (!validProto || !proto.hasOwnProperty('isPrototypeOf'))
+        return false;
+
+    return true;
 };
 
 /*************************************************************************************************/
@@ -61,71 +81,33 @@ _.keys = Object.keys;
 
 _.values = Object.values;
 
-_.forOwn = function (obj, iter) { // iter(val, key, obj)
-    var returned = true;
-
+_.forOwn = function (obj, iteratee) {
     for (var key in obj) {
-        if (obj.hasOwnProperty(key))
-            returned = iter(obj[key], key, obj);
-            
-        if (returned === false)
-            break;
+        if (Object.prototype.hasOwnProperty.call(obj, key))
+            if (false === iteratee(obj[key], key, obj))
+                break;  // exit iteration early by explicitly returning false
     }
 };
 
-_.omit = function (obj, props) {
-    var copied = _.clone(obj);
-
-    if (_.isString(props))
-        props = [ props ];
-
-    _.forEach(props, function (prop) {
-        delete copied[prop];
-    });
-
-    return copied;
-};  // return new object (shallow copy)
-
-_.pick = function (obj, props) {
-    var copied = {};
-
-    if (_.isString(props))
-        props = [ props ];
-
-    _.forEach(props, function (prop) {
-        if (!_.isUndefined(obj[prop]))
-            copied[prop] = obj[prop];
-    });
-
-    return copied;
-};  // return new object (shallow copy)
-
-_.set = function (obj, path, val) {
-    var self = this,
-        allocated = obj,
-        lastObj,
-        lastKey;
+_.get = function (obj, path) {
+    var has = true,
+        target = obj;
 
     path = this.toPath(path);
-    // [a, k]
-    this.forEach(path, function (key, i) {
-        if (!self.isObject(allocated[key])) {
-            allocated[key] = {};
-        } else if (!allocated.hasOwnProperty(key)) {
-            allocated[key] = undefined;
-        }
-        lastObj = allocated;
-        lastKey = key;
-        allocated = allocated[key];
 
+    _.forEach(path, function (key) {
+        if (!_.isObject(target)) {
+            has = false;
+            return false;
+        } else if (!(key in target)) {
+            has = false;
+            return false;
+        } else {
+            target = target[key];
+        }
     });
 
-
-    if (allocated === undefined || Object.keys(allocated).length === 0) {
-        lastObj[lastKey] = val;
-    }
-
-    return obj;
+    return has ? target : undefined;
 };
 
 _.has = function (obj, path) {
@@ -149,34 +131,80 @@ _.has = function (obj, path) {
     return has;
 };
 
-_.remove = function (arr, pred) {
-    var i,
-        hit = false,
-        len = arr.length,
-        removed = [];
+_.merge = function () {
+    var dstObj = arguments[0],
+        len = arguments.length;
 
-    for (i = 0; i < len; i++) {
-        hit = pred(arr[i], i, arr);
-        if (hit) {
-            removed.push(arr.splice(i, 1)[0]);
-            len -= 1;
-            i -= 1;
-        }
+    for (var i = 1; i < len; i++) {
+        _._mergeTwoObjs(dstObj, arguments[i]);
     }
 
-    return removed;
+    return dstObj;
 };
 
+_.omit = function (obj, props) {
+    var copied = _.clone(obj);
+
+    if (_.isString(props)) {
+        delete copied[props];
+    } else if (_.isArray(props)) {
+        _.forEach(props, function (prop) {
+            delete copied[prop];
+        });
+    }
+
+    return copied;
+};  // return new object (shallow copy)
+
+_.pick = function (obj, props) {
+    var copied = {};
+
+    if (_.isString(props))
+        props = [ props ];
+
+    _.forEach(props, function (prop) {
+        if (_.isString(prop) && !_.isUndefined(obj[prop]))
+            copied[prop] = obj[prop];
+    });
+
+    return copied;
+};  // return new object (shallow copy)
+
+_.set = function (obj, path, val) {
+    var allocated = obj,
+        lastObj,
+        lastKey;
+
+    path = _.toPath(path);
+    // [a, k]
+    _.forEach(path, function (key, i) {
+        if (!_.isObject(allocated[key]))
+            allocated[key] = {};
+        else if (!allocated.hasOwnProperty(key))
+            allocated[key] = undefined;
+
+        lastObj = allocated;
+        lastKey = key;
+        allocated = allocated[key];
+    });
+
+    if (allocated === undefined || Object.keys(allocated).length === 0)
+        lastObj[lastKey] = val;
+
+    return obj;
+};
+
+//- next check
+/*************************************************************************************************/
+/*** Collection                                                                                ***/
+/*************************************************************************************************/
 _.forEach = function (collection, iter) {
-    if (this.isPlainObject(collection))
-        return this.forOwn(collection, iter);
+    if (_.isObject(collection))
+        return _.forOwn(collection, iter);
 
-    var returned = true;
-
+    // we don't use Array.prototype.forEach, since it cannot early break.
     for (var i = 0, len = collection.length; i < len; i++) {
-        returned = iter(collection[i], i, collection);
-
-        if (returned === false)
+        if (false === iter(collection[i], i, collection)) 
             break;
     }
 };
@@ -214,72 +242,6 @@ _.size = function (val) {
 
 };
 
-_.split = function (str, separator, limit) {
-    return str.split(separator, limit);
-};
-
-_.clone = function (collection) {
-    var copied;
-
-    if (_.isArray(collection))
-        copied = [];
-    else if (_.isObject)
-        copied = {};
-
-    if (copied) {
-        _.forEach(collection, function (val, key) {
-            copied[key] = val;
-        });
-    }
-
-    return copied;
-};  // shallow copy
-
-_.cloneDeep = function (collection) {
-    var copied;
-
-    if (_.isArray(collection))
-        copied = [];
-    else if (_.isObject)
-        copied = {};
-
-    if (copied) {
-        _.forEach(collection, function (val, key) {
-            copied[key] = _.cloneDeep(val);
-        });
-    }
-
-    return copied;
-};  // deep copy
-
-_.get = function (obj, path) {
-    var has = true,
-        target = obj;
-
-    path = this.toPath(path);
-
-    _.forEach(path, function (key) {
-        if (!_.isObject(target)) {
-            has = false;
-            return false;
-        } else if (!(key in target)) {
-            has = false;
-            return false;
-        } else {
-            target = target[key];
-        }
-    });
-
-    return has ? target : undefined;
-};
-
-_.merge = function (dstObj, srcObj) {
-
-};
-
-/*************************************************************************************************/
-/*** Collection                                                                                ***/
-/*************************************************************************************************/
 _.filter = function (colleciton, pred) {
     var result;
 
@@ -354,6 +316,31 @@ _.isEqual = function () {};
 _.sortBy = function () {};
 // _.now = function () {};
 
+_.remove = function (arr, pred) {
+    var toPred,
+        len = arr.length,
+        hit = false,
+        removed = [];
+
+    if (!_.isFunction(pred))
+        toPred = function (val, idx) {
+            return pred === val;
+        };
+    else
+        toPred = pred;
+
+    for (var i = 0; i < len; i++) {
+        hit = toPred(arr[i], i, arr);
+        if (hit) {
+            removed.push(arr.splice(i, 1)[0]);
+            len -= 1;
+            i -= 1;
+        }
+    }
+
+    return removed;
+};
+
 /*************************************************************************************************/
 /*** Function                                                                                  ***/
 /*************************************************************************************************/
@@ -366,6 +353,10 @@ _.sortBy = function () {};
 /*** String                                                                                    ***/
 /*************************************************************************************************/
 _.parseInt = parseInt;
+
+_.split = function (str, separator, limit) {
+    return str.split(separator, limit);
+};
 
 _.camelCase = function (str) {
     var result;
@@ -426,18 +417,66 @@ _.isEmpty = function (val) {
 _.toPath = function (str) {
     var pathArr;
 
-    if (this.isArray(str)) {
+    if (_.isArray(str)) {
         pathArr = str.map(function (val) {
             return val.toString();
         });
-    } else if (this.isString(str)) {
+    } else if (_.isString(str)) {
         pathArr = str.split(/\.|\[|\]/);
-        this.remove(pathArr, function (p) {
-            return (p === '');
-        });
+        _.remove(pathArr, '');
     }
 
     return pathArr;
+};
+
+_.clone = function (collection) {
+    var copied;
+
+    if (_.isArray(collection))
+        copied = [];
+    else if (_.isObject)
+        copied = {};
+
+    if (copied) {
+        _.forEach(collection, function (val, key) {
+            copied[key] = val;
+        });
+    }
+
+    return copied;
+};  // shallow copy
+
+_.cloneDeep = function (collection) {
+    var copied;
+
+    if (_.isArray(collection))
+        copied = [];
+    else if (_.isObject)
+        copied = {};
+
+    if (copied) {
+        _.forEach(collection, function (val, key) {
+            copied[key] = _.cloneDeep(val);
+        });
+    }
+
+    return copied;
+};  // deep copy
+
+_._mergeTwoObjs = function (dst, src) {
+    _.forEach(src, function (val, key) {
+        console.log(key);
+        if (!_.isUndefined(val)) {
+            if (!_.isObjectLike(val))
+                dst[key] = val;
+            else if (!_.isObjectLike(dst[key]))
+                dst[key] = val;
+            else
+                _._mergeTwoObjs(dst[key], val);
+        }
+    });
+
+    return dst;
 };
 
 module.exports = _;
