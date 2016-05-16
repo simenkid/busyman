@@ -204,7 +204,7 @@ _.forEach = function (collection, iter) {
 
     // we don't use Array.prototype.forEach, since it cannot early break.
     for (var i = 0, len = collection.length; i < len; i++) {
-        if (false === iter(collection[i], i, collection)) 
+        if (false === iter(collection[i], i, collection))
             break;
     }
 };
@@ -227,34 +227,36 @@ _.includes = function (collection, val) {
 };
 
 _.size = function (val) {
-    var s = 0;
+    var size = 0;
 
     if (val === null)
         size = 0;
-    else if (Array.isArray(val))
+    else if (_.isArray(val))
         size = val.length;
-    else if (typeof val === 'object')
+    else if (_.isObject(val))
         size = Object.keys(val).length;
-    else if (typeof val === 'string')
+    else if (_.isString(val))
         size = val.length;
 
     return size;
-
 };
 
 _.filter = function (colleciton, pred) {
-    var result;
-
-    if (_.isArray(colleciton)) {
-        result = Array.prototype.filter.call(colleciton, pred);
-    } else {
+    var toPred,
         result = [];
 
-        _.forEach(colleciton, function (val, key) {
-            if (pred(val, key, colleciton))
-                result.push(colleciton[key]);
-        });
+    if (!_.isFunction(pred)) {
+        toPred = function (val) {
+            return val === pred;
+        };
+    } else {
+        toPred = pred;
     }
+
+    _.forEach(colleciton, function (val, key) {
+        if (true === toPred(val, key, colleciton))
+            result.push(colleciton[key]);
+    });
 
     return result;
 };
@@ -263,10 +265,10 @@ _.find = function (colleciton, pred) {
     var result;
 
     if (_.isArray(colleciton)) {
-        result = Array.prototype.find.call(colleciton, pred);
+        result = Array.prototype.find.call(arguments);
     } else {
         _.forEach(colleciton, function (val, idx) {
-            if (pred(val, idx, colleciton)) {
+            if (true === pred(val, idx, colleciton)) {
                 result = (colleciton[key]);
                 return false;   // break the loop
             }
@@ -282,14 +284,26 @@ _.find = function (colleciton, pred) {
 _.concat = function () {
     return Array.prototype.concat.call(arguments);
 };
-// _.drop = function () {};
-// _.dropRight = function () {};
+
+_.drop = function (arr, n) {
+    n = n || 0;
+    return Array.prototype.slice.call(arr, n, arr.length);
+};
+
+_.dropRight = function (arr, n) {
+    var end;
+    n = n || 0;
+    end = arr.length - n;
+    end = end < 0 ? 0 : end;
+    return Array.prototype.slice.call(arr, 0, end);
+};
+
 _.findIndex = function () {
     return Array.prototype.findIndex.call(arguments);
 };
 
-_.indexOf = function (elems, value) {
-    Array.prototype.indexOf.call(elems, value);
+_.indexOf = function () {
+    return Array.prototype.indexOf.call(arguments);
 };
 
 _.join = function () {
@@ -300,21 +314,54 @@ _.last = function (elems) {
     return elems[elems.length - 1];
 };
 
-// _.pull = function () {};
-// _.slice = function () {};
-// _.take = function () {};
+_.pull = function () {
+    var valMaxIndex = arguments.length,
+        arr = arguments[0];
 
-_.map = function (elems, fn) {
-    return Array.prototype.map.call(elems, fn);
+    for (var i = 1; i < valMaxIndex; i++) {
+        _.remove(arr, arguments[i]);
+    }
+
+    return arr;
 };
 
-_.isEqual = function () {};
+_.slice = function () {
+    return Array.prototype.slice.call(arguments);
+};
 
-// _.reject = function () {};
+_.take = function (arr, n) {
+    return Array.prototype.slice.call(arr, 0, n);
+};
+
+_.map = function (elems, fn) {
+    return Array.prototype.map.call(arguments);
+};
+
+_.reject = function (colleciton, pred) {
+    var toPred,
+        result = [];
+
+    if (!_.isFunction(pred)) {
+        toPred = function (val) {
+            return val === pred;
+        };
+    } else {
+        toPred = pred;
+    }
+
+    _.forEach(colleciton, function (val, key) {
+        if (false === toPred(val, key, colleciton))
+            result.push(colleciton[key]);
+    });
+
+    return result;
+};
+
 // _.some = function () {};
 
 _.sortBy = function () {};
-// _.now = function () {};
+
+_.now = Date.now;
 
 _.remove = function (arr, pred) {
     var toPred,
@@ -344,8 +391,24 @@ _.remove = function (arr, pred) {
 /*************************************************************************************************/
 /*** Function                                                                                  ***/
 /*************************************************************************************************/
-// _.bind = function () {};
-// _.delay = function () {};
+_.bind = function () {
+    return Function.prototype.bind.call(arguments);
+};
+
+_.delay = function () {
+    var fn = arguments[0],
+        dly = arguments[1],
+        args = [];
+
+    for (var i = 2, len = arguments.length; i < len; i++) {
+        args.push(arguments[i]);
+    }
+
+    return setTimeout(function () {
+        fn.apply(null, args);
+    }, dly);
+};
+
 // _.spread = function () {};
 // _.wrap = function () {};
 
@@ -412,6 +475,10 @@ _.isEmpty = function (val) {
         empty = true;
 
     return empty;
+};
+
+_.isEqual = function (val, other) {
+    // [TODO]
 };
 
 _.toPath = function (str) {
