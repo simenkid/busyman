@@ -194,7 +194,6 @@ _.set = function (obj, path, val) {
     return obj;
 };
 
-//- next check
 /*************************************************************************************************/
 /*** Collection                                                                                ***/
 /*************************************************************************************************/
@@ -357,9 +356,28 @@ _.reject = function (colleciton, pred) {
     return result;
 };
 
-// _.some = function () {};
+_.some = function (colleciton, pred) {
+    var toPred,
+        has = false;
 
-_.sortBy = function () {};
+    if (!_.isFunction(pred)) {
+        toPred = function (val) {
+            // [TODO] if val and pred are objects
+            return val === pred;
+        };
+    } else {
+        toPred = pred;
+    }
+
+    _.forEach(colleciton, function (val, key) {
+        if (true === toPred(val, key, colleciton)) {
+           has = true;
+           return false;
+        }
+    });
+
+    return has;
+};
 
 _.now = Date.now;
 
@@ -409,9 +427,6 @@ _.delay = function () {
     }, dly);
 };
 
-// _.spread = function () {};
-// _.wrap = function () {};
-
 /*************************************************************************************************/
 /*** String                                                                                    ***/
 /*************************************************************************************************/
@@ -456,10 +471,39 @@ _.toUpper = function () {
     return String.prototype.toUpperCase.call(arguments);
 };
 
-// _.lowerCase = function () {};
-// _.lowerFirst = function () {};
-// _.upperCase = function () {};
-// _.upperFirst = function () {};
+_.lowerCase = function (str) {
+    var result;
+    // replace -, _ with  (space)
+    str = str.replace(/-/g, ' ');
+    str = str.replace(/_/g, ' ');
+    str = str.trim();
+
+    return str.toLowerCase();
+};
+
+_.lowerFirst = function (str) {
+    var head = str.substr(0, 1).toLowerCase(),
+        tail = str.substr(1, str.length - 1);
+
+    return (head + tail);
+};
+
+_.upperCase = function () {
+    var result;
+    // replace -, _ with  (space)
+    str = str.replace(/-/g, ' ');
+    str = str.replace(/_/g, ' ');
+    str = str.trim();
+
+    return str.toUpperCase();
+};
+
+_.upperFirst = function (str) {
+    var head = str.substr(0, 1).toUpperCase(),
+        tail = str.substr(1, str.length - 1);
+
+    return (head + tail);
+};
 
 /*************************************************************************************************/
 /*** Utils                                                                                     ***/
@@ -478,7 +522,29 @@ _.isEmpty = function (val) {
 };
 
 _.isEqual = function (val, other) {
-    // [TODO]
+    var isEq = true;
+
+    if (typeof val !== typeof other)
+        return false;
+    else if (_.isArray(val) && !_.isArray(other))
+        return false;
+    else if (_.isArray(other) && !_.isArray(val))
+        return false;
+    else if (_.isFunction(val) || _.isFunction(other))
+        return false;
+    else if (!_.isObjectLike(val))
+        return val === other;
+
+    // object-like comparison
+    if (_.size(val) !== _.size(other))
+        return false;
+
+    _.forEach(other, function (v, k) {
+        isEq = _.isEqual(val[k], v);
+        return isEq;    // false, break immediately
+    });
+
+    return isEq;
 };
 
 _.toPath = function (str) {
