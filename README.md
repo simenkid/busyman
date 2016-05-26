@@ -1,4 +1,5 @@
 # busyman
+A quick tool
 
 [![NPM](https://nodei.co/npm/busyman.png?downloads=true)](https://nodei.co/npm/busyman/)  
   
