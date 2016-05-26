@@ -1,10 +1,10 @@
 {
   "name": "busyman",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "make test-all"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/simenkid/busyman/issues"
   },
-  "homepage": "https://github.com/simenkid/busyman#readme"
+  "homepage": "https://github.com/simenkid/busyman#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
 }
