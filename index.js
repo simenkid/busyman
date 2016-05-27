@@ -53,7 +53,7 @@ _.isPlainObject = function (val) {
     var proto,
         validConstr,
         validProto,
-        preCheckPass = _.isObject(val) && !_.isArray(val) && Object.prototype.toString.call(o) === '[object Object]';
+        preCheckPass = _.isObject(val) && !_.isArray(val) && Object.prototype.toString.call(val) === '[object Object]';
 
     if (!preCheckPass)
         return false;
