@@ -227,7 +227,6 @@ describe('Methods of type checking', function() {
         });
     });
 
-
     describe('#_.isNull', function() {
         it('should be a function', function () {
             expect(_.isNull).to.be.a('function');
@@ -352,5 +351,4 @@ describe('Methods of type checking', function() {
             expect(_.isPlainObject(new X('foo'))).to.be.false;
         });
     });
-
 });

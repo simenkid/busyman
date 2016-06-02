@@ -198,13 +198,14 @@ _.set = function (obj, path, val) {
 /*** Collection                                                                                ***/
 /*************************************************************************************************/
 _.forEach = function (collection, iter) {
-    if (_.isObject(collection))
+    if (_.isArray(collection)) {
+        // we don't use Array.prototype.forEach, since it cannot early break.
+        for (var i = 0, len = collection.length; i < len; i++) {
+            if (false === iter(collection[i], i, collection))
+                break;
+        }
+    } else if (_.isObject(collection)) {
         return _.forOwn(collection, iter);
-
-    // we don't use Array.prototype.forEach, since it cannot early break.
-    for (var i = 0, len = collection.length; i < len; i++) {
-        if (false === iter(collection[i], i, collection))
-            break;
     }
 };
 
@@ -512,11 +513,15 @@ _.isEmpty = function (val) {
     var empty = false;
 
     if (_.isObject(val))
-        empty = !!_.keys(val).length;
-    else if (_.isArray(val) || _.isString(val))
-        empty = !!val.length;
+        empty = !_.keys(val).length;
+    else if (_.isArray(val) || _.isString(val) || _.isBuffer(val))
+        empty = !val.length;
     else if (_.isNil(val))
         empty = true;
+    else if (Object.prototype.hasOwnProperty.call(val, 'length'))
+        empty = !val.length;
+    else if (Object.prototype.hasOwnProperty.call(val, 'size'))
+        empty = !val.size;
 
     return empty;
 };
@@ -584,13 +589,15 @@ _.cloneDeep = function (collection) {
 
     if (_.isArray(collection))
         copied = [];
-    else if (_.isObject)
+    else if (_.isObject(collection))
         copied = {};
 
     if (copied) {
         _.forEach(collection, function (val, key) {
             copied[key] = _.cloneDeep(val);
         });
+    } else {
+        copied = collection;
     }
 
     return copied;
@@ -598,7 +605,6 @@ _.cloneDeep = function (collection) {
 
 _._mergeTwoObjs = function (dst, src) {
     _.forEach(src, function (val, key) {
-        console.log(key);
         if (!_.isUndefined(val)) {
             if (!_.isObjectLike(val))
                 dst[key] = val;
