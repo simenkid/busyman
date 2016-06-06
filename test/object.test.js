@@ -71,8 +71,42 @@ describe('Methods of type checking', function() {
 
         it('should returns the array of property names', function() {
             expect(_.values(obj)).to.be.deep.equal([ 0, 1, 2 ]);
-            // expect(_.values(arr)).to.be.deep.equal([ 1, 'a', 'b', {}, [] ]);
-            // expect(_.values(str)).to.be.deep.equal([ 'h', 'e', 'y' ]);
+            expect(_.values(arr)).to.be.deep.equal([ 1, 'a', 'b', {}, [] ]);
+            expect(_.values(str)).to.be.deep.equal([ 'h', 'e', 'y' ]);
         });
     });
+
+    describe('#_.forOwn', function() {}).skip;
+
+    describe('#_.get', function() {
+        var object = { 'a': [{ 'b': { 'c': 3 } }] };
+
+        it('should be a function', function() {
+            expect(_.get).to.be.a('function');
+        });
+
+        it('should be the value of the specified path', function() {
+            expect(_.get(object, 'a[0].b.c')).to.be.equal(3);
+            expect(_.get(object,  ['a', '0', 'b'])).to.be.deep.equal({ 'c': 3 });
+            expect(_.get(object,  'a.b.c')).to.be.equal(undefined);
+            expect(_.get(object,  'a.b.c', 'default')).to.be.equal('default');
+        });
+    });
+
+    describe('#_.has', function() {
+        var object = { 'a': [{ 'b': { 'c': 3 } }] };
+
+        it('should be a function', function() {
+            expect(_.has).to.be.a('function');
+        });
+
+        it('should be the value of the specified path', function() {
+            expect(_.has(object, 'a')).to.be.equal(true);
+            expect(_.has(object,  ['a', '0'])).to.be.equal(true);
+            expect(_.has(object,  'a[0].b.c')).to.be.equal(true);
+            expect(_.has(object,  'a.b.c')).to.be.equal(false);
+        });
+    });
+
+    
 });

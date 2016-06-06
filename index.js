@@ -80,10 +80,20 @@ _.assign = Object.assign;
 _.keys = Object.keys;
 
 _.values = function (obj) {
-    _.map(obj, function (val) {
-        console.log(val);
-        return val;
-    });
+    var strLen,
+        result = [];
+
+    if (_.isString(obj)) {
+        strLen = obj.length;
+        for(var i = 0; i < strLen; i += 1) {
+            result.push(obj[i]);
+        }
+    } else if (_.isObject(obj))
+        result =  _.map(obj, function (val) {
+            return val;
+        });
+
+    return result;
 };
 
 _.forOwn = function (obj, iteratee) {
@@ -94,7 +104,7 @@ _.forOwn = function (obj, iteratee) {
     }
 };
 
-_.get = function (obj, path) {
+_.get = function (obj, path, defaultValue) {
     var has = true,
         target = obj;
 
@@ -112,7 +122,7 @@ _.get = function (obj, path) {
         }
     });
 
-    return has ? target : undefined;
+    return has ? target : defaultValue;
 };
 
 _.has = function (obj, path) {
@@ -339,7 +349,13 @@ _.take = function (arr, n) {
 };
 
 _.map = function (elems, fn) {
-    return Array.prototype.map.call(arguments);
+    var result = [];
+
+    _.forEach(elems, function(elem) {
+        result.push(fn(elem));
+    });
+
+    return result;
 };
 
 _.reject = function (colleciton, pred) {
