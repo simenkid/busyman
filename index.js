@@ -79,7 +79,12 @@ _.assign = Object.assign;
 
 _.keys = Object.keys;
 
-_.values = Object.values;
+_.values = function (obj) {
+    _.map(obj, function (val) {
+        console.log(val);
+        return val;
+    });
+};
 
 _.forOwn = function (obj, iteratee) {
     for (var key in obj) {
