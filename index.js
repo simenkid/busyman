@@ -160,6 +160,14 @@ _.merge = function () {
 _.omit = function (obj, props) {
     var copied = _.clone(obj);
 
+    if (_.isArray(copied)) {
+        copied = {};
+
+        _.forEach(obj, function (val, i) {
+            copied[i] = val;
+        });
+    }
+
     if (_.isString(props)) {
         delete copied[props];
     } else if (_.isArray(props)) {
@@ -194,7 +202,10 @@ _.set = function (obj, path, val) {
     // [a, k]
     _.forEach(path, function (key, i) {
         if (!_.isObject(allocated[key]))
-            allocated[key] = {};
+            if (!_.isNaN(_.parseInt(path[i + 1])))
+                allocated[key] = [];
+            else
+                allocated[key] = {};
         else if (!allocated.hasOwnProperty(key))
             allocated[key] = undefined;
 

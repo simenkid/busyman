@@ -76,7 +76,30 @@ describe('Methods of type checking', function() {
         });
     });
 
-    describe('#_.forOwn', function() {}).skip;
+    describe('#_.forOwn', function() {
+        var Foo = function () {
+              this.a = 1;
+              this.b = 2;
+            },
+            keys = [],
+            vals = [];
+
+        Foo.prototype.c = 3;
+
+        it('should be a function', function() {
+            expect(_.forOwn).to.be.a('function');
+        });
+
+        it('should on iterates own properties of instance', function () {
+            _.forOwn(new Foo, function (val, key) {
+                keys.push(key);
+                vals.push(val);
+            });
+
+            expect(keys).to.be.deep.equal(['a', 'b']);
+            expect(vals).to.be.deep.equal([1, 2]);
+        });        
+    });
 
     describe('#_.get', function() {
         var object = { 'a': [{ 'b': { 'c': 3 } }] };
@@ -108,5 +131,126 @@ describe('Methods of type checking', function() {
         });
     });
 
-    
+    describe('#_.merge', function () {
+        var originObj = {
+                data: [ { 'user': 'barney' }, { 'user': 'fred' } ]
+            },
+            sourceObj1 = {
+                data: [ { 'age': 36 }, { 'age': 40 } ]
+            },
+            sourceObj2 = { x: 'hi', y: [0, 1, 2], z: { z1: 'hello', z2: false } },
+            sourceObj3 = { z: { z3: [ 0, 1, 2 ] } };
+
+        it('should be a function', function() {
+            expect(_.merge).to.be.a('function');
+        });
+
+        it('merged object should be equal to originObj', function () {
+            expect(_.merge(originObj, sourceObj1)).to.be.equal(originObj);
+            expect(originObj).to.be.deep.equal({
+                data: [
+                    { 'user': 'barney', 'age': 36 },
+                    { 'user': 'fred', 'age': 40 }
+                ]
+            });
+
+            expect(_.merge(originObj, sourceObj2, sourceObj3)).to.be.equal(originObj);
+            expect(originObj).to.be.deep.equal({
+                x: 'hi',
+                y: [0, 1, 2],
+                z: {
+                    z1: 'hello',
+                    z2: false,
+                    z3: [ 0, 1, 2 ] },
+                data: [
+                    { 'user': 'barney', 'age': 36 },
+                    { 'user': 'fred', 'age': 40 }
+                ]
+            });
+
+            expect(_.merge(originObj, sourceObj1)).to.be.equal(originObj);
+            expect(originObj).to.be.deep.equal({
+                x: 'hi',
+                y: [0, 1, 2],
+                z: {
+                    z1: 'hello',
+                    z2: false,
+                    z3: [ 0, 1, 2 ] },
+                data: [
+                    { 'user': 'barney', 'age': 36 },
+                    { 'user': 'fred', 'age': 40 }
+                ]
+            });
+
+            sourceObj1.data.push({ age: 100 });
+            expect(_.merge(originObj, sourceObj1)).to.be.equal(originObj);
+            expect(originObj).to.be.deep.equal({
+                x: 'hi',
+                y: [0, 1, 2],
+                z: {
+                    z1: 'hello',
+                    z2: false,
+                    z3: [ 0, 1, 2 ] },
+                data: [
+                    { 'user': 'barney', 'age': 36 },
+                    { 'user': 'fred', 'age': 40 },
+                    { 'age': 100 }
+                ]
+            });
+        });
+    });
+
+    describe('#_.omit', function () {
+        var object = { 'a': 1, 'b': '2', 'c': 3, 'd': '4' },
+            array = [ 'a', 'b', 'c', 'x', 'y', 'z' ];
+
+        it('should be a function', function() {
+            expect(_.omit).to.be.a('function');
+        });
+
+        it('object should has properties that are not omitted', function () {
+            expect(_.omit(object, [ 'e' ])).to.be.not.equal(object);
+            expect(_.omit(object, [ 'e' ])).to.be.deep.equal(object);
+            expect(_.omit(object, 'b')).to.be.deep.equal({ 'a': 1, 'c': 3, 'd': '4' });
+            expect(_.omit(object, [ 'a', 'c' ])).to.be.deep.equal({ 'b': '2', 'd': '4' });
+            expect(_.omit(array, [ '0', '3', '4' ])).to.be.deep.equal({ '1': 'b', '2': 'c', '5': 'z' });
+        });
+    });
+
+    describe('#_.pick', function () {
+        var object = { 'a': 1, 'b': '2', 'c': 3, 'd': '4' },
+            array = [ 'a', 'b', 'c', 'x', 'y', 'z' ];
+
+        it('should be a function', function() {
+            expect(_.pick).to.be.a('function');
+        });
+
+        it('object should composed of picked properties', function () {
+            expect(_.pick(object, [ 'a', 'b', 'c', 'd' ])).to.be.not.equal(object);
+            expect(_.pick(object, [ 'a', 'b', 'c', 'd' ])).to.be.deep.equal(object);
+            expect(_.pick(object, 'b')).to.be.deep.equal({ 'b': '2' });
+            expect(_.pick(object, [ 'a', 'c' ])).to.be.deep.equal({ 'a': 1, 'c': 3 });
+            expect(_.pick(array, [ '0', '3', '4' ])).to.be.deep.equal({ '0': 'a', '3': 'x', '4': 'y' });
+        });
+    });
+
+    describe('#_.set', function () {
+        var object = { 'a': [{ 'b': { 'c': 3 } }] };
+
+        it('should be a function', function() {
+            expect(_.set).to.be.a('function');
+        });
+
+        it('object should be set with given path and value', function () {
+            expect(_.set(object, 'd', 4)).to.be.equal(object);
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': { 'c': 3 } }], 'd': 4 });
+
+            expect(_.set(object, ['x', '0', 'y', 'z'], 5)).to.be.equal(object);
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': { 'c': 3 } }], 'd': 4, 'x': [{ 'y': { 'z': 5 } }] });
+
+            expect(_.set(object, 'a[0].b.c', 4)).to.be.equal(object);
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': { 'c': 4 } }], 'd': 4, 'x': [{ 'y': { 'z': 5 } }] });
+
+        });
+    });
 });
