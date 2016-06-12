@@ -1,7 +1,7 @@
 var expect = require('chai').expect,
     _ = require('../index.js');     // busyman module
 
-describe('Methods of type checking', function() {
+describe('Methods of object', function() {
     describe('#_.assign', function() {
         var originObj = {
                 user: 'barney'

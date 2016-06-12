@@ -291,10 +291,10 @@ _.find = function (colleciton, pred) {
     var result;
 
     if (_.isArray(colleciton)) {
-        result = Array.prototype.find.call(arguments);
+        result = colleciton.find(pred);
     } else {
-        _.forEach(colleciton, function (val, idx) {
-            if (true === pred(val, idx, colleciton)) {
+        _.forEach(colleciton, function (val, key) {
+            if (true === pred(val, key, colleciton)) {
                 result = (colleciton[key]);
                 return false;   // break the loop
             }
