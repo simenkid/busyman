@@ -465,8 +465,8 @@ _.delay = function () {
 /*************************************************************************************************/
 _.parseInt = parseInt;
 
-_.split = function (str, separator, limit) {
-    return str.split(separator, limit);
+_.split = function (str) {
+    return String.prototype.split.call(str, arguments[1], arguments[2]);
 };
 
 _.camelCase = function (str) {
@@ -475,37 +475,42 @@ _.camelCase = function (str) {
     str = str.replace(/-/g, ' ');
     str = str.replace(/_/g, ' ');
     str = str.trim();
+    str = str.toLowerCase();
 
     str = str.split(' ');
 
-    _.forEach(str, function () {
+    _.forEach(str, function (str, idx) {
         // 1st lower case, ... Uppercae, then concat all
+        if (idx === 0)
+            result = str;
+        else
+            result += _.upperFirst(str);
     });
 
+    return result;
 };
 
-_.endsWith = function () {
-    return String.prototype.endsWith.call(arguments);
+_.endsWith = function (str) {
+    return String.prototype.endsWith.call(str, arguments[1], arguments[2]);
 };
 
-_.replace = function () {
-    return String.prototype.replace.call(arguments);
+_.replace = function (str) {
+    return String.prototype.replace.call(str, arguments[1], arguments[2]);
 };
 
-_.startsWith = function () {
-    return String.prototype.startsWith.call(arguments);
+_.startsWith = function (str) {
+    return String.prototype.startsWith.call(str, arguments[1], arguments[2]);
 };
 
-_.toLower = function () {
-    return String.prototype.toLowerCase.call(arguments);
+_.toLower = function (str) {
+    return str.toLowerCase();
 };
 
-_.toUpper = function () {
-    return String.prototype.toUpperCase.call(arguments);
+_.toUpper = function (str) {
+    return str.toUpperCase();
 };
 
 _.lowerCase = function (str) {
-    var result;
     // replace -, _ with  (space)
     str = str.replace(/-/g, ' ');
     str = str.replace(/_/g, ' ');
@@ -521,8 +526,7 @@ _.lowerFirst = function (str) {
     return (head + tail);
 };
 
-_.upperCase = function () {
-    var result;
+_.upperCase = function (str) {
     // replace -, _ with  (space)
     str = str.replace(/-/g, ' ');
     str = str.replace(/_/g, ' ');
