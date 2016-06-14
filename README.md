@@ -497,7 +497,7 @@ var person = { name: 'Peter', age: 24 }
 
 var bound = _.bind(greet, person, 'Hello');
 
-console.log(bound('!'));
+console.log(bound('!'));    // 'Hello Peter!'
 ```
 
 *************************************************
