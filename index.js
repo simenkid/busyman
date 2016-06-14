@@ -308,7 +308,14 @@ _.find = function (colleciton, pred) {
 /*** Array                                                                                     ***/
 /*************************************************************************************************/
 _.concat = function () {
-    return Array.prototype.concat.call(arguments);
+    var arr = arguments[0],
+        args = [];
+
+    for (var i = 1, len = arguments.length; i < len; i++) {
+        args.push(arguments[i]);
+    }
+
+    return Array.prototype.concat.apply(arr, args);
 };
 
 _.drop = function (arr, n) {
@@ -324,20 +331,20 @@ _.dropRight = function (arr, n) {
     return Array.prototype.slice.call(arr, 0, end);
 };
 
-_.findIndex = function () {
-    return Array.prototype.findIndex.call(arguments);
+_.findIndex = function (arr, pred, thisArg) {
+    return Array.prototype.findIndex.call(arr, pred, thisArg);
 };
 
-_.indexOf = function () {
-    return Array.prototype.indexOf.call(arguments);
+_.indexOf = function (arr, val, index) {
+    return Array.prototype.indexOf.call(arr, val, index);
 };
 
-_.join = function () {
-    return Array.prototype.join.call(arguments);
+_.join = function (arr, sep) {
+    return Array.prototype.join.call(arr, sep);
 };
 
-_.last = function (elems) {
-    return elems[elems.length - 1];
+_.last = function (arr) {
+    return arr[arr.length - 1];
 };
 
 _.pull = function () {
@@ -351,19 +358,19 @@ _.pull = function () {
     return arr;
 };
 
-_.slice = function () {
-    return Array.prototype.slice.call(arguments);
+_.slice = function (arr, start, end) {
+    return Array.prototype.slice.call(arr, start, end);
 };
 
 _.take = function (arr, n) {
     return Array.prototype.slice.call(arr, 0, n);
 };
 
-_.map = function (elems, fn) {
+_.map = function (arr, fn) {
     var result = [];
 
-    _.forEach(elems, function(elem) {
-        result.push(fn(elem));
+    _.forEach(arr, function(val, index) {
+        result.push(fn(val, index, arr));
     });
 
     return result;
@@ -443,12 +450,38 @@ _.remove = function (arr, pred) {
 /*** Function                                                                                  ***/
 /*************************************************************************************************/
 _.bind = function () {
-    return Function.prototype.bind.call(arguments);
+    var fn = arguments[0],
+        thisArg = arguments[1],
+        partials = [];    
+
+    for (var i = 2, len = arguments.length; i < len; i++) {
+        partials.push(arguments[i]);
+    }
+
+    function wrapper() {
+        var argsIndex = -1,
+            argsLength = arguments.length,
+            leftIndex = -1,
+            leftLength = partials.length,
+            args = Array(leftLength + argsLength);
+
+        while (++leftIndex < leftLength) {
+          args[leftIndex] = partials[leftIndex];
+        }
+
+        while (argsLength--) {
+          args[leftIndex++] = arguments[++argsIndex];
+        }
+
+        return fn.apply(thisArg, args);
+      }
+
+    return wrapper;
 };
 
 _.delay = function () {
     var fn = arguments[0],
-        dly = arguments[1],
+        dly = arguments[1] || 0,
         args = [];
 
     for (var i = 2, len = arguments.length; i < len; i++) {
