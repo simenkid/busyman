@@ -525,3 +525,267 @@ _.delay(function(text) {
 ```
 
 *************************************************
+<a name="API_split"></a>
+### _.split(string, separator[, limit])
+
+Splits a string into an array of strings by separator.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to split.  
+2. `separator` (_String_ | _RegExp_): The separator pattern to split by.  
+3. `limit` (_Number_): The length to truncate results to.  
+
+**Returns:**  
+
+* (_Array_): Returns the string segments.  
+
+**Examples:**  
+
+```js
+_.split('abcde', 'c');       // ['ab', 'de']
+
+_.split('abcde', /[bd]/);    // ['a', 'c', 'e']
+
+_.split('abcde', '', 3);     // ['a', 'b', 'c']
+```
+
+*************************************************
+<a name="API_camelCase"></a>
+### _.camelCase(string)
+
+Converts a string into camel case.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to convert.  
+
+**Returns:**  
+
+* (_String_): Returns the camel cased string.  
+
+**Examples:**  
+
+```js
+_.camelCase('24 hour');        // '24Hour'
+
+_.camelCase('HELLO-WORLD');    // 'helloWorld'
+
+_.camelCase('__FOO_BAR__');    // 'fooBar'
+```
+
+*************************************************
+<a name="API_endsWith"></a>
+### _.endsWith(string, target[, position])
+
+Checks if string ends with the given target string.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to search.  
+2. `target` (_String_): The string to search for.  
+3. `position` (_Number_): The position to search up to.  
+
+**Returns:**  
+
+* (_Boolean_): Returns true if string ends with target, else false.  
+
+**Examples:**  
+
+```js
+_.endsWith('abc', 'c');       // true
+
+_.endsWith('abc', 'b');       // false
+
+_.endsWith('abc', 'b', 2);    // true
+```
+
+*************************************************
+<a name="API_replace"></a>
+### _.replace(string, pattern, replacement)
+
+Replaces matches for pattern in string with replacement.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to modify.  
+2. `pattern` (_String_ | _RegExp_): The pattern to replace.  
+3. `replacement` (_String_ | _Function_): The match replacement.  
+
+**Returns:**  
+
+* (_String_): Returns the modified string.  
+
+**Examples:**  
+
+```js
+_.replace('abcde', 'c', ' ');        // 'ab de'
+
+_.replace('abcde', 'cde', '123');    // 'ab123'
+
+_.replace('abcde', /[bd]/g, '-');    // 'a-c-e'
+```
+
+*************************************************
+<a name="API_startsWith"></a>
+### _.startsWith(string, target[, position])
+
+Checks if string starts with the given target string.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to search.  
+2. `target` (_String_ | _RegExp_): The string to search for.  
+3. `position` (_Number_): The match replacement.  
+
+**Returns:**  
+
+* (_Boolean_): Returns true if string starts with target, else false.  
+
+**Examples:**  
+
+```js
+_.startsWith('abc', 'a');       // true
+
+_.startsWith('abc', 'b');       // false
+
+_.startsWith('abc', 'b', 1);    // true
+```
+
+*************************************************
+<a name="API_toLower"></a>
+### _.toLower(string)
+
+Converts a string into lower case.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to convert.  
+
+**Returns:**  
+
+* (_String_): Returns the lower cased string.  
+
+**Examples:**  
+
+```js
+_.toLower('ABCDE');          // 'abcde'
+
+_.toLower('24_HOUR');        // '24_hour'
+
+_.toLower('--FOO-BAR--');    // '--foo-bar--'
+```
+
+*************************************************
+<a name="API_toUpper"></a>
+### _.toUpper()
+
+Converts a string into upper case.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to convert.  
+
+**Returns:**  
+
+* (_String_): Returns the upper cased string.  
+
+**Examples:**  
+
+```js
+_.toUpper('abcde');          // 'ABCDE'
+
+_.toUpper('24_hour');        // '24_HOUR'
+
+_.toUpper('--foo-bar--');    // '--FOO-BAR--'
+```
+
+*************************************************
+<a name="API_lowerCase"></a>
+### _.lowerCase()
+
+Converts string, as space separated words, to lower case.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to convert.  
+
+**Returns:**  
+
+* (_String_): Returns the lower cased string.  
+
+**Examples:**  
+
+```js
+_.lowerCase('HELLO');          // 'hello'
+
+_.lowerCase('HELLO-WORLD');    // 'hello world'
+```
+
+*************************************************
+<a name="API_lowerFirst"></a>
+### _.lowerFirst()
+
+Converts the first character of string to lower case.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to convert.  
+
+**Returns:**  
+
+* (_String_): Returns the converted string.  
+
+**Examples:**  
+
+```js
+_.lowerFirst('HELLO');          // 'hELLO'
+
+_.lowerFirst('HELLO-WORLD');    // 'hELLO-WORLD'
+```
+
+*************************************************
+<a name="API_upperCase"></a>
+### _.upperCase()
+
+Converts string, as space separated words, to upper case.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to convert.  
+
+**Returns:**  
+
+* (_String_): Returns the upper cased string.  
+
+**Examples:**  
+
+```js
+_.upperCase('hello');          // 'HELLO'
+
+_.upperCase('hello-world');    // 'HELLO WORLD'
+```
+
+*************************************************
+<a name="API_upperFirst"></a>
+### _.upperFirst()
+
+Converts the first character of string to upper case.  
+
+**Arguments:**  
+
+1. `string` (_String_): The string to convert.  
+
+**Returns:**  
+
+* (_String_): Returns the converted string.  
+
+**Examples:**  
+
+```js
+_.upperFirst('hello');          // 'Hello'
+
+_.upperFirst('hello-world');    // 'Hello-world'
+```
+
+*************************************************
