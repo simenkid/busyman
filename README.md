@@ -42,37 +42,37 @@ console.log(_.isArray('hello'));    // false
 ## 4. APIs
 
 * Type checking
-    * [_.isNull()](#API_isNull), [_.isNil()](#API_isNil), [_.isUndefined()](#API_isUndefined), [_.isNaN()](#API_isNaN)  
-    * [_.isArray()](#API_isArray), [_.isObject()](#API_isObject), [_.isPlainObject()](#API_isPlainObject), [_.isBuffer()](#API_isBuffer)  
-    * [_.isBoolean()](#API_isBoolean),[_.isNumber()](#API_isNumber), [_.isString()](#API_isString), [_.isInteger()](#API_isInteger), [_.isFunction()](#API_isFunction)  
+    * [isNull](#API_isNull), [isNil](#API_isNil), [isUndefined](#API_isUndefined), [isNaN](#API_isNaN)  
+    * [isArray](#API_isArray), [isObject](#API_isObject), [isPlainObject](#API_isPlainObject), [isBuffer](#API_isBuffer)  
+    * [isBoolean](#API_isBoolean),[isNumber](#API_isNumber), [isString](#API_isString), [isInteger](#API_isInteger), [isFunction](#API_isFunction)  
   
 * String
-    * [_.parseInt()](#API_parseInt)  
-    * [_.startsWith()](#API_startsWith), [_.endsWith()](#API_endsWith)  
-    * [_.split()](#API_split), [_.replace()](#API_replace)  
-    * [_.camelCase()](#API_camelCase), [_.toLower()](#API_toLower), [_.toUpper()](#API_toUpper), [_.lowerCase()](#API_lowerCase), [_.upperCase()](#API_upperCase), [_.lowerFirst()](#API_lowerFirst), [_.upperFirst()](#API_upperFirst)  
+    * [parseInt](#API_parseInt)  
+    * [startsWith](#API_startsWith), [endsWith](#API_endsWith)  
+    * [split](#API_split), [replace](#API_replace)  
+    * [camelCase](#API_camelCase), [toLower](#API_toLower), [toUpper](#API_toUpper), [lowerCase](#API_lowerCase), [upperCase](#API_upperCase), [lowerFirst](#API_lowerFirst), [upperFirst](#API_upperFirst)  
   
 * Object/Collection
-    * [_.has()](#API_has), [_.includes()](#API_includes)  
-    * [_.keys()](#API_keys), [_.values()](#API_values), [_.size()](#API_size)  
-    * [_.assign()](#API_assign), [_.merge()](#API_merge), [_.omit()](#API_omit), [_.pick()](#API_pick)  
-    * [_.get()](#API_get), [_.set()](#API_set), [_.find()](#API_find), [_.filter()](#API_filter)  
-    * [_.forOwn()](#API_forOwn), [_.forEach()](#API_forEach)  
+    * [has](#API_has), [includes](#API_includes)  
+    * [keys](#API_keys), [values](#API_values), [size](#API_size)  
+    * [assign](#API_assign), [merge](#API_merge), [omit](#API_omit), [pick](#API_pick)  
+    * [get](#API_get), [set](#API_set), [find](#API_find), [filter](#API_filter)  
+    * [forOwn](#API_forOwn), [forEach](#API_forEach)  
   
 * Array
-    * [_.some()](#API_some)  
-    * [_.findIndex()](#API_findIndex), [_.indexOf()](#API_indexOf)  
-    * [_.concat()](#API_concat), [_.join()](#API_join)  
-    * [_.slice()](#API_slice), [_.last()](#API_last), [_.pull()](#API_pull), [_.take()](#API_take), [_.drop()](#API_drop), [_.dropRight()](#API_dropRight)  
-    * [_.map()](#API_map), [_.reject()](#API_reject), [_.remove()](#API_remove)  
+    * [some](#API_some)  
+    * [findIndex](#API_findIndex), [indexOf](#API_indexOf)  
+    * [concat](#API_concat), [join](#API_join)  
+    * [slice](#API_slice), [last](#API_last), [pull](#API_pull), [take](#API_take), [drop](#API_drop), [dropRight](#API_dropRight)  
+    * [map](#API_map), [reject](#API_reject), [remove](#API_remove)  
   
 * Function
-    * [_.bind()](#API_bind), [_.delay()](#API_delay)
+    * [bind](#API_bind), [delay](#API_delay)
   
 * Utility
-    * [_.isEmpty()](#API_isEmpty), [_.isEqual()](#API_isEqual)  
-    * [_.clone()](#API_clone), [_.cloneDeep()](#API_cloneDeep)  
-    * [_.now()](#API_now)  
+    * [isEmpty](#API_isEmpty), [isEqual](#API_isEqual)  
+    * [clone](#API_clone), [cloneDeep](#API_cloneDeep)  
+    * [now](#API_now)  
 
 
 *************************************************
@@ -1076,9 +1076,7 @@ A.prototype.c = 2;
 B.prototype.e = 4;
 
 result = _.assign({a: 0}, new A(), new B());
-
-console.log(result);
-// log { a: 0, b: 1, d: 3 }
+// { a: 0, b: 1, d: 3 }
 ```
 
 *************************************************
@@ -1105,14 +1103,14 @@ function Foo() {
 
 Foo.prototype.z = 2;
 
-console.log(_.keys(new Foo));
-// log [ 'x', 'y' ] (iteration order is not guaranteed)
+_.keys(new Foo);
+// [ 'x', 'y' ] (iteration order is not guaranteed)
 
-console.log(_.keys([ 1, 2, 3, 4, 5 ]));
-// log [ '0', '1', '2', '3', '4' ]
+_.keys([ 1, 2, 3, 4, 5 ]);
+// [ '0', '1', '2', '3', '4' ]
 
-console.log(_.keys('hey'));
-// log [ '0', '1', '2' ]
+_.keys('hey');
+// [ '0', '1', '2' ]
 ```
 
 *************************************************
@@ -1139,14 +1137,14 @@ function Foo() {
 
 Foo.prototype.z = 2;
 
-console.log(_.values(new Foo));
-// log [ 0, 1 ] (iteration order is not guaranteed)
+_.values(new Foo);
+// [ 0, 1 ] (iteration order is not guaranteed)
 
-console.log(_.values([ 1, 2, 3, 4, 5 ]));
-// log [ 1, 2, 3, 4, 5 ]
+_.values([ 1, 2, 3, 4, 5 ]);
+// [ 1, 2, 3, 4, 5 ]
 
-console.log(_.values('hey'));
-// log [ 'h', 'e', 'y' ]
+_.values('hey');
+// [ 'h', 'e', 'y' ]
 ```
 
 *************************************************
@@ -1211,14 +1209,9 @@ Get the value of the specified `path` of `object`
 ```js
 var object = { x: { y: [ { z: 5 } ] } };
 
-console.log(_.get(object, 'x.y[0].z'));
-// log 5
-
-console.log(_.get(object, ['x', 'y', '0', 'z']));
-// log 5
-
-console.log(_.get(object, 'x.y.z', 'defaultVal'));
-// log 'defaultVal'
+_.get(object, 'x.y[0].z');              // 5
+_.get(object, ['x', 'y', '0', 'z']);    // 5
+_.get(object, 'x.y.z', 'defaultVal');   // 'defaultVal'
 ```
 
 *************************************************
@@ -1241,14 +1234,9 @@ Check the path of the object exists or not.
 ```js
 var object = { x: { y: [ { z: 5 } ] } };
 
-console.log(_.has(object, 'x.y[0].z'));
-// log true
-
-console.log(_.has(object, ['x', 'y', '0', 'z']));
-// log true
-
-console.log(_.has(object, 'x.y.z'));
-// log 'false
+_.has(object, 'x.y[0].z');              // true
+_.has(object, ['x', 'y', '0', 'z']);    // true
+_.has(object, 'x.y.z');                 // 'false
 ```
 
 *************************************************
@@ -1276,8 +1264,8 @@ var originObj = {
         data: [ { age: 19 }, { age: 25 } ]
     };
 
-console.log(_.merge(originObj, sourceObj1));
-// log [ { user: 'arya', age: 19 }, { user: 'robb', age: 25 } ]
+_.merge(originObj, sourceObj1);
+// [ { user: 'arya', age: 19 }, { user: 'robb', age: 25 } ]
 ```
 
 *************************************************
@@ -1300,11 +1288,8 @@ Create an object with properties that are not omitted in `object`.
 ```js
 var object = { x: 0, y: '1', z: 2 }
 
-console.log(_.omit(object, 'x'));
-//log { y: '1', z: 2 }
-
-console.log(_.omit(object, ['y', 'z']));
-//log { x: 0 }
+_.omit(object, 'x');        // { y: '1', z: 2 }
+_.omit(object, ['y', 'z']); // { x: 0 }
 ```
 
 *************************************************
@@ -1327,11 +1312,8 @@ Create an object with properties that are picked in `object`.
 ```js
 var object = { x: 0, y: '1', z: 2 }
 
-console.log(_.pick(object, 'x'));
-//log { x: 0 }
-
-console.log(_.pick(object, ['y', 'z']));
-//log { y: '1', z: 2 }
+_.pick(object, 'x');        // { x: 0 }
+_.pick(object, ['y', 'z']); // { y: '1', z: 2 }
 ```
 
 *************************************************
@@ -1355,8 +1337,8 @@ Set object value to the new `value` at the given `path`
 ```js
 var object = { x: { y: [ { z: 5 } ] } };
 
-console.log(_.set(object, 'x.y[0].z'), 'hello');
-// log { x: { y: [ { z: 'hello' } ] } }
+_.set(object, 'x.y[0].z'), 'hello');
+// { x: { y: [ { z: 'hello' } ] } }
 ```
 
 *************************************************
@@ -1425,14 +1407,14 @@ var obj = { 'user': 'fred', 'age': 40 },
     arr = [1, 2, 3],
     str = 'pebbles';
 
-console.log(_.includes(obj, 'fred'));     // log true
-console.log(_.includes(obj, 'freddy'));   // log false
+_.includes(obj, 'fred');     // log true
+_.includes(obj, 'freddy');   // log false
 
-console.log(_.includes(arr, 2));          // log true
-console.log(_.includes(arr, 4));          // log false
+_.includes(arr, 2);          // log true
+_.includes(arr, 4);          // log false
 
-console.log(_.includes(str, 'eb'));       // log true
-console.log(_.includes(str, 'ese'));      // log false
+_.includes(str, 'eb');       // log true
+_.includes(str, 'ese');      // log false
 ```
 
 *************************************************
@@ -1456,9 +1438,9 @@ var obj = { 'user': 'fred', 'age': 40 },
     arr = [1, 2, 3],
     str = 'pebbles';
 
-console.log(_.size(obj));   // log 2
-console.log(_.size(arr));   // log 3
-console.log(_.size(str));   // log 7
+_.size(obj);   // log 2
+_.size(arr);   // log 3
+_.size(str);   // log 7
 ```
 
 *************************************************
@@ -1550,7 +1532,7 @@ _.now();    // 1466047513349
 ```
 
 *************************************************
-<a name="API_now"></a>
+<a name="API_parseInt"></a>
 ### _.parseInt(string[, radix])
 
 Parses a string to an integer with the specified radix. This method is based on the global [parseInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt).  
