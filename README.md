@@ -111,6 +111,315 @@ console.log(_.isArray('hello'));    // false
 
 *************************************************
 
+
+*************************************************
+<a name="API_isArray"></a>
+### _.isArray(value)
+Checks if a value is an array. This method is based on [Array.isArray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray).  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is, otherwise `false`.  
+
+**Examples:** 
+
+```js
+_.isArray([ 1 ]);       // true
+_.isArray({ x: 1 });    // false
+```
+
+*************************************************
+<a name="API_isNaN"></a>
+### _.isNaN(value)
+Checks if a value is NaN. This method is based on the global [isNaN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN).  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is NaN, otherwise `false`.  
+
+**Examples:** 
+
+```js
+// These examples are from MDN document
+_.isNaN(NaN);       // true
+_.isNaN(undefined); // true
+_.isNaN({});        // true
+_.
+_.isNaN(true);      // false
+_.isNaN(null);      // false
+_.isNaN(37);        // false
+
+// strings
+_.isNaN("37");      // false
+_.isNaN("37.37");   // false
+_.isNaN("123ABC");  // true
+_.isNaN("");        // false
+_.isNaN(" ");       // false
+
+// dates
+_.isNaN(new Date());            // false
+_.isNaN(new Date().toString()); // true
+
+// This is a false positive and the reason why isNaN is not entirely reliable
+_.isNaN("blabla");  // true: "blabla" is converted to a number. 
+                    // Parsing this as a number fails and returns NaN
+```
+
+*************************************************
+<a name="API_isBuffer"></a>
+### _.isBuffer(value)
+Checks if a value is a Buffer. This method is based on node.js [Buffer.isBuffer](https://nodejs.org/api/buffer.html#buffer_class_method_buffer_isbuffer_obj).  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is a buffer, otherwise `false`.  
+
+**Examples:** 
+
+```js
+_.isBuffer(new Buffer([ 1, 2, 3 ]));    // true
+_.isBuffer([ 1, 2 ]);                   // false
+```
+
+*************************************************
+<a name="API_isInteger"></a>
+### _.isInteger(value)
+Checks if a value is an integer. This method is based on [Number.isInteger](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger).  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is an interger, otherwise `false`.  
+
+**Examples:** 
+
+```js
+_.isInteger(12);    // true
+_.isInteger(1.36);  // false
+_.isInteger('hi');  // false
+_.isInteger('18');  // false
+_.isInteger({});    // false
+```
+
+*************************************************
+<a name="API_isBoolean"></a>
+### _.isBoolean(value)
+Checks if a value is a bool.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is a bool, otherwise `false`.  
+
+**Examples:** 
+
+```js
+_.isBoolean(false); // true
+_.isBoolean(18);    // false
+```
+
+*************************************************
+<a name="API_isNumber"></a>
+### _.isNumber(value)
+Checks if a value is a number.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is a number, otherwise `false`.  
+
+**Examples:** 
+
+```js
+_.isNumber(3);          // true
+_.isNumber('18');       // false
+_.isNumber('hello');    // false
+
+```
+
+*************************************************
+<a name="API_isString"></a>
+### _.isString(value)
+Checks if a value is a string.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is a string, otherwise `false`.  
+
+**Examples:** 
+
+```js
+_.isString('hello');    // true
+_.isString(6);          // false
+```
+
+*************************************************
+<a name="API_isFunction"></a>
+### _.isFunction(value)
+Checks if a value is a function.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is a function, otherwise `false`.  
+
+**Examples:** 
+
+```js
+_.isFunction(function () {});   // true
+_.isFunction(6);                // false
+```
+
+*************************************************
+<a name="API_isUndefined"></a>
+### _.isUndefined(value)
+Checks if a value is undefined.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is undefined, otherwise `false`.  
+
+**Examples:** 
+
+```js
+var aUndef;
+
+_.isUndefined();        // true
+_.isUndefined(aUndef);  // true
+_.isUndefined(6);       // false
+```
+
+*************************************************
+<a name="API_isNull"></a>
+### _.isNull(value)
+Checks if a value is null.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is null, otherwise `false`.  
+
+**Examples:** 
+
+```js
+var aUndef;
+
+_.isNull(null);     // true
+_.isNull(aUndef);   // false
+_.isNull(3);        // false
+```
+
+*************************************************
+<a name="API_isNil"></a>
+### _.isNil(value)
+Checks if a value is null or undefined.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is null or undefined, otherwise `false`.  
+
+**Examples:** 
+
+```js
+var aUndef;
+
+_.isNil(null);      // true
+_.isNil(aUndef);    // true
+_.isNil(3);         // false
+_.isNil([]);        // false
+```
+
+*************************************************
+<a name="API_isObject"></a>
+### _.isObject(value)
+Checks if a value is an object. A `null` is considered not an object. An array is considered as an object as usual.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is an object, otherwise `false`.  
+
+**Examples:** 
+
+```js
+var anObject = { x: 1 },
+    anArray = [ 1, 2 ],
+    aNull = null,
+    notAnObject = 8;
+
+_.isObject({ x: 1 });   // true
+_.isObject([ 1, 2 ]);   // true
+_.isObject(null);       // false
+_.isObject(8);          // false
+```
+
+*************************************************
+<a name="API_isPlainObject"></a>
+### _.isPlainObject(value)
+Checks if a value is a plain object. A `null` is not an plain object. An array is not an plain object. An object created from a constructo other than Object constructor is not an plain object.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+ * (_Boolean_): `true` if it is a plain object, otherwise `false`.  
+
+**Examples:** 
+
+```js
+function Foo() {}   // Foo constructor
+
+_.isPlainObject({ x: 1 });  // true
+_.isPlainObject([ 1, 2 ]);  // false
+_.isPlainObject(null);      // false
+_.isPlainObject(8);         // false
+_.isPlainObject(new Foo()); // false
+```
+
 *************************************************
 <a name="API_concat"></a>
 ### _.concat(array, value1[, value2[, ...[, valueN]]])
@@ -128,12 +437,11 @@ Creates a new array concatenating `array` with any additional arrays and/or valu
 **Examples:** 
 
 ```js
-var array = [1];
-var other = _.concat(array, 2, [3], [[4]]);
+var array = [ 1 ];
+var other = _.concat(array, 2, [ 3 ], [ [ 4 ] ]);
 
-console.log(other);     // [1, 2, 3, [4]]
-
-console.log(array);     // [1]
+console.log(other);     // [ 1, 2, 3, [ 4 ] ]
+console.log(array);     // [ 1 ]
 ```
 
 *************************************************
@@ -153,13 +461,11 @@ Creates a slice of `array` with `n` elements dropped from the beginning.
 **Examples:** 
 
 ```js
-var array = [1, 2, 3, 4, 5, 6];
+var array = [ 1, 2, 3, 4, 5, 6 ];
 
-console.log(_.drop(array));         // [1, 2, 3, 4, 5, 6]
-
-console.log(_.drop(array, 3));      // [4, 5, 6]
-
-console.log(_.drop(array, 6));      // []
+_.drop(array);      // [ 1, 2, 3, 4, 5, 6 ]
+_.drop(array, 3);   // [ 4, 5, 6 ]
+_.drop(array, 6);   // []
 ```
 
 *************************************************
@@ -179,19 +485,17 @@ Creates a slice of `array` with `n` elements dropped from the end.
 **Examples:** 
 
 ```js
-var array = [1, 2, 3, 4, 5, 6];
+var array = [ 1, 2, 3, 4, 5, 6 ];
 
-console.log(_.drop(array));         // [1, 2, 3, 4, 5, 6]
-
-console.log(_.drop(array, 3));      // [1, 2, 3]
-
-console.log(_.drop(array, 6));      // []
+_.dropRight(array);      // [ 1, 2, 3, 4, 5, 6 ]
+_.dropRight(array, 3);   // [ 1, 2, 3 ]
+_.dropRight(array, 6);   // []
 ```
 
 *************************************************
 <a name="API_findIndex"></a>
 ### _.findIndex(array, predicate[, thisArg])
-Gets an index in the `array`, if an value in the array satisfies the provided `predicate` function. Otherwise -1 is returned.
+Gets an index in the `array`, if an value in the array satisfies the provided `predicate` function. Otherwise -1 is returned.  
 
 **Arguments:**  
 
@@ -209,21 +513,21 @@ Gets an index in the `array`, if an value in the array satisfies the provided `p
 **Examples:** 
 
 ```js
-var array = [1, 2, 3, 1, 2, 3];
+var array = [ 1, 2, 3, 1, 2, 3 ];
 
-console.log(_.findIndex(array, function (value, index, array) {
+_.findIndex(array, function (value, index, array) {
     return value > 2;
-}));        // 2
+}); // 2
 
-console.log(_.findIndex(array, function (value, index, array) {
+_.findIndex(array, function (value, index, array) {
     return value > 4;
-}));        // -1
+});    // -1
 ```
 
 *************************************************
 <a name="API_indexOf"></a>
-### _.indexOf(array, value[, fromIndex])
-Gets the first index at which a given `value` can be found in the `array`, or -1 if it is not present.
+### _.indexOf(array, value[, fromIndex])  
+Gets the first index at which a given `value` can be found in the `array`, or -1 if it is not present.  
 
 **Arguments:**  
 
@@ -233,16 +537,15 @@ Gets the first index at which a given `value` can be found in the `array`, or -1
 
 **Returns:**  
 
- * (_Number_): Returns the index of the matched value, else -1.
+ * (_Number_): Returns the index of the matched value, else -1.  
 
 **Examples:** 
 
 ```js
-var array = [1, 2, 3, 1, 2, 3];
+var array = [ 1, 2, 3, 1, 2, 3 ];
 
-console.log(_.indexOf(array, 3));       // 2
-
-console.log(_.indexOf(array, 3, 2));    // 5
+_.indexOf(array, 3);    // 2
+_.indexOf(array, 3, 2); // 5
 ```
 
 *************************************************
@@ -262,9 +565,8 @@ Converts all elements in array into a string separated by `separator`.
 **Examples:** 
 
 ```js
-console.log(_.join(['a', 'b', 'c']));       // 'a,b,c'
-
-console.log(_.join(['a', 'b', 'c'], '-'));  // 'a-b-c'
+_.join([ 'a', 'b', 'c' ]));       // 'a,b,c'
+_.join([ 'a', 'b', 'c' ], '-'));  // 'a-b-c'
 ```
 
 *************************************************
@@ -283,13 +585,13 @@ Gets the last element of array.
 **Examples:** 
 
 ```js
-console.log(_.last(['a', 'b', 'c']));   // 'c'
+_.last(['a', 'b', 'c']);    // 'c'
 ```
 
 *************************************************
 <a name="API_pull"></a>
 ### _.pull(array, value1[, value2[, ...[, valueN]]])
-Removes all given `values` from `array`.
+Removes all given `values` from `array`.  
 
 **Arguments:**  
 
@@ -303,9 +605,9 @@ Removes all given `values` from `array`.
 **Examples:** 
 
 ```js
-var array = ['a', 'b', 'c', 'a', 'b'];
+var array = [ 'a', 'b', 'c', 'a', 'b' ];
 
-console.log(_.pull(array, 'a', 'c'));    // ['b', 'b']
+_.pull(array, 'a', 'c');    // [ 'b', 'b' ]
 ```
 
 *************************************************
@@ -326,11 +628,10 @@ Creates a shallow copy of a portion of an `array` into a new array object.
 **Examples:** 
 
 ```js
-var array = [1, 2, 3];
+var array = [ 1, 2, 3 ];
 
-console.log(_.slice(array, 1));         // [2, 3]
-
-console.log(_.slice(array, 1, 2));      // [2]
+_.slice(array, 1);      // [ 2, 3 ]
+_.slice(array, 1, 2);   // [ 2 ]
 ```
 
 *************************************************
@@ -350,9 +651,9 @@ Creates a slice of `array` with `n` elements taken from the beginning.
 **Examples:** 
 
 ```js
-var array = [1, 2, 3];
+var array = [ 1, 2, 3 ];
 
-console.log(_.take(array, 2));     // [1, 2]
+_.take(array, 2);   // [ 1, 2 ]
 ```
 
 *************************************************
@@ -375,13 +676,13 @@ Creates an array of values by running each element in `array` thru `iterate`.
 **Examples:** 
 
 ```js
-var array = [1, 2, 3];
+var array = [ 1, 2, 3 ];
 
-console.log(_.map(array, String));  // ['1', '2', '3']
+_.map(array, String);   // [ '1', '2', '3' ]
 
-console.log(_.map(array, function (val) {
+_.map(array, function (val) {
     return val * 2;
-}));  // [2, 4, 6]
+});  // [ 2, 4, 6 ]
 ```
 
 *************************************************
@@ -399,16 +700,18 @@ returns the elements of `array` that predicate does not return truthy for.
 
 **Returns:**  
 
- * (_Array_): Returns the new filtered array.
+ * (_Array_): Returns the new filtered array.  
 
 **Examples:** 
 
 ```js
-var array = [1, 2, 3, 4];
+var array = [ 1, 2, 3, 4 ];
 
-console.log(_.reject(array, function (val) { return val % 2 === 0; }));     // [1, 3]
+_.reject(array, function (val) {
+    return val % 2 === 0;
+});  // [ 1, 3 ]
 
-console.log(_.reject(array, 4));    // [1, 2, 3]
+_.reject(array, 4);     // [ 1, 2, 3 ]
 ```
 
 *************************************************
@@ -426,18 +729,21 @@ Checks if predicate returns truthy for _String_ and _Number_ element of collecti
 
 **Returns:**  
 
- * (_boolean_): Returns true if any element passes the predicate check, else false.
+ * (_Boolean_): Returns true if any element passes the predicate check, else false.
 
 **Examples:** 
 
 ```js
-console.log(_.some([1, 2, 3, 4, 5], function (val) { return val % 2 === 0; }));     // true
+_.some([ 1, 2, 3, 4, 5 ], function (val) {
+    return val % 2 === 0;
+}); // true
 
-console.log(_.some([1, 3, 5], function (val) { return val % 2 === 0; }));           // false
+_.some([ 1, 3, 5 ], function (val) {
+    return val % 2 === 0;
+}); // false
 
-console.log(_.some(['a', 'b', 'c'], 'a'));      // true
-
-console.log(_.some(['a', 'b', 'c'], 'd'));      // false
+_.some([ 'a', 'b', 'c' ], 'a'); // true
+_.some([ 'a', 'b', 'c' ], 'd'); // false
 ```
 
 *************************************************
@@ -460,15 +766,16 @@ Removes all elements from `array` that predicate returns truthy for and returns 
 **Examples:** 
 
 ```js
-var array = [1, 2, 3, 4];
+var array = [ 1, 2, 3, 4 ];
 
-console.log(_.remove(array, function (val) { return val % 2 === 0; }));       // [2, 4]
+_.remove(array, function (val) {
+    return val % 2 === 0;
+}); // [ 2, 4 ]
 
-console.log(array);                 // [1, 3]
+console.log(array); // [ 1, 3 ]
 
-console.log(_.remove(array, 3));    // [3]
-
-console.log(array);                 // [1]
+_.remove(array, 3); // [ 3 ]
+console.log(array); // [ 1 ]
 ```
 
 *************************************************
@@ -493,11 +800,14 @@ var greet = function (greeting, punctuation) {
     return greeting + ' ' + this.name + punctuation;
 };
 
-var person = { name: 'Peter', age: 24 }
+var person = {
+    name: 'Peter',
+    age: 24
+};
 
 var bound = _.bind(greet, person, 'Hello');
 
-console.log(bound('!'));    // 'Hello Peter!'
+bound('!'); // 'Hello Peter!'
 ```
 
 *************************************************
@@ -519,8 +829,9 @@ Invokes `func` after `time` milliseconds. Any additional arguments are provided 
 
 ```js
 _.delay(function(text) {
-  console.log(text);
+    console.log(text);
 }, 1000, 'Hello');
+
 // Logs 'Hello' after one second.
 ```
 
@@ -543,11 +854,9 @@ Splits a string into an array of strings by separator.
 **Examples:**  
 
 ```js
-_.split('abcde', 'c');       // ['ab', 'de']
-
-_.split('abcde', /[bd]/);    // ['a', 'c', 'e']
-
-_.split('abcde', '', 3);     // ['a', 'b', 'c']
+_.split('abcde', 'c');      // [ 'ab', 'de' ]
+_.split('abcde', /[bd]/);   // [ 'a', 'c', 'e' ]
+_.split('abcde', '', 3);    // [ 'a', 'b', 'c' ]
 ```
 
 *************************************************
@@ -567,11 +876,9 @@ Converts a string into camel case.
 **Examples:**  
 
 ```js
-_.camelCase('24 hour');        // '24Hour'
-
-_.camelCase('HELLO-WORLD');    // 'helloWorld'
-
-_.camelCase('__FOO_BAR__');    // 'fooBar'
+_.camelCase('24 hour');     // '24Hour'
+_.camelCase('HELLO-WORLD'); // 'helloWorld'
+_.camelCase('__FOO_BAR__'); // 'fooBar'
 ```
 
 *************************************************
@@ -593,11 +900,9 @@ Checks if string ends with the given target string.
 **Examples:**  
 
 ```js
-_.endsWith('abc', 'c');       // true
-
-_.endsWith('abc', 'b');       // false
-
-_.endsWith('abc', 'b', 2);    // true
+_.endsWith('abc', 'c');     // true
+_.endsWith('abc', 'b');     // false
+_.endsWith('abc', 'b', 2);  // true
 ```
 
 *************************************************
@@ -619,11 +924,9 @@ Replaces matches for pattern in string with replacement.
 **Examples:**  
 
 ```js
-_.replace('abcde', 'c', ' ');        // 'ab de'
-
-_.replace('abcde', 'cde', '123');    // 'ab123'
-
-_.replace('abcde', /[bd]/g, '-');    // 'a-c-e'
+_.replace('abcde', 'c', ' ');       // 'ab de'
+_.replace('abcde', 'cde', '123');   // 'ab123'
+_.replace('abcde', /[bd]/g, '-');   // 'a-c-e'
 ```
 
 *************************************************
@@ -646,9 +949,7 @@ Checks if string starts with the given target string.
 
 ```js
 _.startsWith('abc', 'a');       // true
-
 _.startsWith('abc', 'b');       // false
-
 _.startsWith('abc', 'b', 1);    // true
 ```
 
@@ -669,11 +970,9 @@ Converts a string into lower case.
 **Examples:**  
 
 ```js
-_.toLower('ABCDE');          // 'abcde'
-
-_.toLower('24_HOUR');        // '24_hour'
-
-_.toLower('--FOO-BAR--');    // '--foo-bar--'
+_.toLower('ABCDE');         // 'abcde'
+_.toLower('24_HOUR');       // '24_hour'
+_.toLower('--FOO-BAR--');   // '--foo-bar--'
 ```
 
 *************************************************
@@ -693,11 +992,9 @@ Converts a string into upper case.
 **Examples:**  
 
 ```js
-_.toUpper('abcde');          // 'ABCDE'
-
-_.toUpper('24_hour');        // '24_HOUR'
-
-_.toUpper('--foo-bar--');    // '--FOO-BAR--'
+_.toUpper('abcde');         // 'ABCDE'
+_.toUpper('24_hour');       // '24_HOUR'
+_.toUpper('--foo-bar--');   // '--FOO-BAR--'
 ```
 
 *************************************************
@@ -717,9 +1014,8 @@ Converts string, as space separated words, to lower case.
 **Examples:**  
 
 ```js
-_.lowerCase('HELLO');          // 'hello'
-
-_.lowerCase('HELLO-WORLD');    // 'hello world'
+_.lowerCase('HELLO');       // 'hello'
+_.lowerCase('HELLO-WORLD'); // 'hello world'
 ```
 
 *************************************************
@@ -740,7 +1036,6 @@ Converts the first character of string to lower case.
 
 ```js
 _.lowerFirst('HELLO');          // 'hELLO'
-
 _.lowerFirst('HELLO-WORLD');    // 'hELLO-WORLD'
 ```
 
@@ -761,9 +1056,8 @@ Converts string, as space separated words, to upper case.
 **Examples:**  
 
 ```js
-_.upperCase('hello');          // 'HELLO'
-
-_.upperCase('hello-world');    // 'HELLO WORLD'
+_.upperCase('hello');           // 'HELLO'
+_.upperCase('hello-world');     // 'HELLO WORLD'
 ```
 
 *************************************************
@@ -784,7 +1078,6 @@ Converts the first character of string to upper case.
 
 ```js
 _.upperFirst('hello');          // 'Hello'
-
 _.upperFirst('hello-world');    // 'Hello-world'
 ```
 
