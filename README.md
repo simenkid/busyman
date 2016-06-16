@@ -1082,3 +1082,487 @@ _.upperFirst('hello-world');    // 'Hello-world'
 ```
 
 *************************************************
+<a name="API_assign"></a>
+###_.assign(object[, sources1[, sources2[, ...[, sourcesN]]]])
+
+Copy the values of all enumerable own properties from one or more source objects to a destination object. It will return the destination object.
+
+**Arguments:**
+
+1. `object` (*Object*): The destination object.
+2. `sourcesN` (*Object*): The source objects.
+
+**Returns:**
+
+- (*Object*): object
+
+**Examples:**
+
+```js
+var result;
+
+var function A() {
+    this.b = 1;
+}
+
+var function B() {
+    this.d = 3;
+}
+
+A.prototype.c = 2;
+B.prototype.e = 4;
+
+result = _.assign({a: 0}, new A(), new B());
+
+console.log(result);
+// log { a: 0, b: 1, d: 3 }
+```
+
+*************************************************
+<a name="API_keys"></a>
+###_.keys(object)
+
+Creates an array contains all enumerable property names of a given `object` own. 
+
+**Arguments:**
+
+1. `object` (*Object*): The object to query.
+
+**Returns:**
+
+- (*Array*): Returns the array of all property names.
+
+**Examples:**
+
+```js
+function Foo() {
+  this.x = 0;
+  this.y = 1;
+}
+
+Foo.prototype.z = 2;
+
+console.log(_.keys(new Foo));
+// log [ 'x', 'y' ] (iteration order is not guaranteed)
+
+console.log(_.keys([ 1, 2, 3, 4, 5 ]));
+// log [ '0', '1', '2', '3', '4' ]
+
+console.log(_.keys('hey'));
+// log [ '0', '1', '2' ]
+```
+
+*************************************************
+<a name="API_values"></a>
+###_.values(object)
+
+Creates an array contains all enumerable property values of a given `object` own.
+
+**Arguments:**
+
+1. `object` (*Object*): The object to query.
+
+**Returns:**
+
+- (*Array*): Returns the array of all property values.
+
+**Examples:**
+
+```js
+function Foo() {
+  this.x = 0;
+  this.y = 1;
+}
+
+Foo.prototype.z = 2;
+
+console.log(_.values(new Foo));
+// log [ 0, 1 ] (iteration order is not guaranteed)
+
+console.log(_.values([ 1, 2, 3, 4, 5 ]));
+// log [ 1, 2, 3, 4, 5 ]
+
+console.log(_.values('hey'));
+// log [ 'h', 'e', 'y' ]
+```
+
+*************************************************
+<a name="API_forOwn"></a>
+###_.forOwn(object, iteratee)
+
+Interates all enumerable properties of `object` own, and execute `iteratee` for each property.
+
+**Arguments:**
+
+1. `object` (*Object*): The object to be iterated.
+2. `iteratee` (*Function*): The function invoked per iteration.
+
+**Returns:**
+
+- (*None*)
+
+**Examples:**
+
+```js
+var keys = [];
+    vals = [];
+
+function Foo() {
+  this.x = 0;
+  this.y = 1;
+}
+
+Foo.prototype.z = 2;
+
+_.forOwn(new Foo, function(value, key) {
+  keys.push(key);
+  vals.push(val);
+});
+
+console.log(keys);
+// log [ 'x', 'y' ]
+
+console.log(vals);
+// log [ 0, 1 ]
+
+```
+
+*************************************************
+<a name="API_get"></a>
+###_.get(object, path[, defaultValue])
+
+Get the value of the specified `path` of `object`
+
+**Arguments:**
+
+1. `object` (*Object*): The object to query.
+2. `path` (*Array* | *String*): The path refers to an object property.
+3. `defaultValue` (*Depends*): If value of specified path not found, return `defaultValue`.
+
+**Returns:**
+
+- (*Depends*): The value of specified path.
+
+**Examples:**
+
+```js
+var object = { x: { y: [ { z: 5 } ] } };
+
+console.log(_.get(object, 'x.y[0].z'));
+// log 5
+
+console.log(_.get(object, ['x', 'y', '0', 'z']));
+// log 5
+
+console.log(_.get(object, 'x.y.z', 'defaultVal'));
+// log 'defaultVal'
+```
+
+*************************************************
+<a name="API_has"></a>
+###_.has(object, path)
+
+Check the path of the object exists or not.
+
+**Arguments:**
+
+1. `object` (*Object*): The object to query.
+2. `path` (*String* | *Array*): Path to be checked.
+
+**Returns:**
+
+- (*Boolean*): true or false means path is exist or not.
+
+**Examples:**
+
+```js
+var object = { x: { y: [ { z: 5 } ] } };
+
+console.log(_.has(object, 'x.y[0].z'));
+// log true
+
+console.log(_.has(object, ['x', 'y', '0', 'z']));
+// log true
+
+console.log(_.has(object, 'x.y.z'));
+// log 'false
+```
+
+*************************************************
+<a name="API_merge"></a>
+###_.merge(object[, sources1[, sources2[, ...[, sourcesN]]]])
+
+Merge all source objects into the destination object.
+
+**Arguments:**
+
+1. `object` (*Object*): The destination object.
+2. `sourceN` (*Object*): The source objects.
+
+**Returns:**
+
+- (*Object*): The destination object.
+
+**Examples:**
+
+```js
+var originObj = {
+        data: [ { user: 'arya' }, { user: 'robb' } ]
+    },
+    sourceObj1 = {
+        data: [ { age: 19 }, { age: 25 } ]
+    };
+
+console.log(_.merge(originObj, sourceObj1));
+// log [ { user: 'arya', age: 19 }, { user: 'robb', age: 25 } ]
+```
+
+*************************************************
+<a name="API_omit"></a>
+###_.omit(object, props)
+
+Create an object with properties that are not omitted in `object`.
+
+**Arguments:**
+
+1. `object` (*Object*): The source object.
+2. `props` (*String* | *Array*): Properties of object to be omitted
+
+**Returns:**
+
+- (*Object*): New object with properities not omit.
+
+**Examples:**
+
+```js
+var object = { x: 0, y: '1', z: 2 }
+
+console.log(_.omit(object, 'x'));
+//log { y: '1', z: 2 }
+
+console.log(_.omit(object, ['y', 'z']));
+//log { x: 0 }
+```
+
+*************************************************
+<a name="API_pick"></a>
+###_.pick(object, props)
+
+Create an object with properties that are picked in `object`.
+
+**Arguments:**
+
+1. `object` (*Object*): The source object.
+2. `props` (*String* | *Array*): Properties of object to be picked
+
+**Returns:**
+
+- (*Object*): New object with picked properities.
+
+**Examples:**
+
+```js
+var object = { x: 0, y: '1', z: 2 }
+
+console.log(_.pick(object, 'x'));
+//log { x: 0 }
+
+console.log(_.pick(object, ['y', 'z']));
+//log { y: '1', z: 2 }
+```
+
+*************************************************
+<a name="API_set"></a>
+###_.set(object, path, value)
+
+Set object value to the new `value` at the given `path`
+
+**Arguments:**
+
+1. `object` (*object*): The object to be set
+2. `path` (*String* | *Array*): The path specify to the object value.
+3. `value` (*Depends*): The value to set.
+
+**Returns:**
+
+- (*Object*): `object`
+
+**Examples:**
+
+```js
+var object = { x: { y: [ { z: 5 } ] } };
+
+console.log(_.set(object, 'x.y[0].z'), 'hello');
+// log { x: { y: [ { z: 'hello' } ] } }
+```
+
+*************************************************
+<a name="API_forEach"></a>
+###_.forEach(collection, iteratee)
+
+Iterative each element of collection, and execute the iteratee for each element
+
+**Arguments:**
+
+1. `collection` (*Array* | *Object*): The collection to be iterated.
+2. `iteratee` (*Function*): The function execute for each element.
+
+**Returns:**
+
+- (*None*)
+
+**Examples:**
+
+```js
+var obj = { a: 0, b: 1, c: 'x', d: '2' },
+    arr = [ 'x', 'y', 3, '0' ],
+    vals1 = [],
+    keys1 = [],
+    vals2 = [],
+    keys2 = [];
+
+_.forEach(obj, function (val, key) {
+    vals1.push(val);
+    keys1.push(key);
+});
+console.log(vals1);
+// log [ 0, 1, 'x', 'x' ]
+console.log(keys1);
+// log [ 'a', 'b', 'c', 'd' ]
+
+_.forEach(arr, function (val, key) {
+    vals2.push(val);
+    keys2.push(key);
+});
+console.log(vals2);
+// log [ 'x', 'y', 3, '0' ]
+console.log(keys2);
+// log [ '0', '1', '2', '3' ]
+```
+
+*************************************************
+<a name="API_includes"></a>
+###_.includes(collection, value)
+
+Check whether the `value` contained in the `collection`
+
+**Arguments:**
+
+1. `collection` (*Object* | *Array* | *String*): The collection to query.
+2. `value` (*Depends*): The value to search for.
+
+**Returns:**
+
+- (*Boolean*): true or false means the value is found or not.
+
+**Examples:**
+
+```js
+var obj = { 'user': 'fred', 'age': 40 },
+    arr = [1, 2, 3],
+    str = 'pebbles';
+
+console.log(_.includes(obj, 'fred'));     // log true
+console.log(_.includes(obj, 'freddy'));   // log false
+
+console.log(_.includes(arr, 2));          // log true
+console.log(_.includes(arr, 4));          // log false
+
+console.log(_.includes(str, 'eb'));       // log true
+console.log(_.includes(str, 'ese'));      // log false
+```
+
+*************************************************
+<a name="API_size"></a>
+###_.size(collection)
+
+Obtains the size of the `collection`.
+
+**Arguments:**
+
+1. `collection` (*Object* | *Array* | *String*): The collection to query.
+
+**Returns:**
+
+- (*Number*): collection size.
+
+**Examples:**
+
+```js
+var obj = { 'user': 'fred', 'age': 40 },
+    arr = [1, 2, 3],
+    str = 'pebbles';
+
+console.log(_.size(obj));   // log 2
+console.log(_.size(arr));   // log 3
+console.log(_.size(str));   // log 7
+```
+
+*************************************************
+<a name="API_filter"></a>
+###_.filter(collection, predicate)
+
+Iterates all the elements of `collection`, will return an array which contains all the elements of `predicate` returns true.
+
+**Arguments:**
+
+1. `collection` (*Array* | *Object*): The collection to be iterated.
+2. `predicate` (*Function*): The function execute for each element.
+
+**Returns:**
+
+- (*Array*): Array contains the filter value.
+
+**Examples:**
+
+```js
+var users = [
+        { 'user': 'arya',  'age': 19, 'active': true },
+        { 'user': 'robb',  'age': 25, 'active': false },
+        { 'user': 'sansa', 'age': 22, 'active': true }
+    ],
+    result;
+
+result = _.filter(users, function (user) {
+    return user.active === true;
+});
+
+console.log(result);
+// log [
+//         { 'user': 'arya',  'age': 19, 'active': true },
+//         { 'user': 'sansa', 'age': 22, 'active': true }
+//     ]
+```
+
+*************************************************
+<a name="API_find"></a>
+###_.find(collection, predicate)
+
+Iterates all the elements of `collection`, will return the first element of `predicate` returns true.
+
+**Arguments:**
+
+1. `collection` (*Array* | *Object*): The collection to be iterated.
+2. `predicate` (*Function*): The function execute for each element.
+
+**Returns:**
+
+- (*Depends*): The first matching element.
+
+**Examples:**
+
+```js
+var users = [
+        { 'user': 'arya',  'age': 19, 'active': true },
+        { 'user': 'robb',  'age': 25, 'active': false },
+        { 'user': 'sansa', 'age': 22, 'active': true }
+    ],
+    result;
+
+result = _.find(users, function (user) {
+    return user.age > 20; 
+});
+
+console.log(result);
+// log { 'user': 'robb', 'age': 25, 'active': false }
+```
