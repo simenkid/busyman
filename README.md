@@ -1098,7 +1098,7 @@ Checks if predicate returns truthy for any element of collection. Iteration is s
 **Arguments:**  
 
 1. `collection` (_Array_|_Object_): The collection to iterate over.  
-2. `predicate` (_Function_ | _String_ | _Number_): `function (value, key, collection) { }`, the function invoked per iteration.
+2. `predicate` (_Function_): `function (value, key, collection) { }`, the function invoked per iteration.
      * `value`: The current value being processed in the `collection`.  
      * `key`: The key or index of the current element being processed in the `collection`.  
      * `collection`: The original `collection`.  
@@ -1117,9 +1117,6 @@ _.some([ 1, 2, 3, 4, 5 ], function (val) {
 _.some([ 1, 3, 5 ], function (val) {
     return val % 2 === 0;
 }); // false
-
-_.some([ 'a', 'b', 'c' ], 'a'); // true
-_.some([ 'a', 'b', 'c' ], 'd'); // false
 ```
 
 *************************************************
@@ -1439,7 +1436,7 @@ Returns the elements of `collection` that `predicate` does not return truthy for
 **Arguments:**  
 
 1. `collection` (_Array_|_Object_): The collection to iterate over.  
-2. `predicate` (_Function_ | _String_ | _Number_): `function (value, key, array) { }`, the function invoked per iteration.  
+2. `predicate` (_Function_): `function (value, key, array) { }`, the function invoked per iteration.  
      * `value`: The current value being processed in the `collection`.  
      * `key`: The key or index of the current value being processed in the `collection`.  
      * `collection`: The original `collection`.  
@@ -1451,13 +1448,9 @@ Returns the elements of `collection` that `predicate` does not return truthy for
 **Examples:** 
 
 ```js
-var array = [ 1, 2, 3, 4 ];
-
-_.reject(array, function (val) {
+_.reject([ 1, 2, 3, 4 ], function (val) {
     return val % 2 === 0;
 });  // [ 1, 3 ]
-
-_.reject(array, 4);     // [ 1, 2, 3 ]
 ```
 
 *************************************************

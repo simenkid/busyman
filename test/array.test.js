@@ -207,42 +207,62 @@ describe('Methods of function', function() {
     });
 
     describe('#_.reject', function() {
-        var array = [1, 2, 3, 4];
+        var array = [1, 2, 3, 4],
+            object = {
+                'a': 1,
+                'b': 2,
+                'c': 3
+            };
 
         it('should be a function', function () {
             expect(_.reject).to.be.a('function');
         });
 
-        it('should reject values in array when `pred` is a function', function () {
+        it('should reject values in array when `collection` is array and `pred` is a function', function () {
             expect(_.reject(array, function (val) { return val % 2 === 0; })).to.be.eql([1, 3]);
         });
 
-        it('should reject values in array when `pred` is a value', function () {
-            expect(_.reject(array, 4)).to.be.eql([1, 2, 3]);
+        it('should reject values in array when `collection` is object and `pred` is a function', function () {
+            expect(_.reject(object, function (val) { return val % 2 === 0; })).to.be.eql([1, 3]);
+        });
+
+        it('should throw when `pred` is a value', function () {
+            expect(function () { _.reject(array, 4); }).to.throw(TypeError);
         });
     });
 
     describe('#_.some', function() {
-        var array = [1, 3, 5, [ 'a', 'b' ], { a: 1, b: 2 }];
+        var array = [1, 3, 5, [ 'a', 'b' ], { a: 1, b: 2 }],
+            object = {
+                a: 1,
+                b: 3,
+                c: ['a', 'b'],
+                d: {
+                    x: 5,
+                    y: 7
+                }
+            };
 
         it('should be a function', function () {
             expect(_.some).to.be.a('function');
         });
 
-        it('should should return `true` when `pred` is a function', function () {
+        it('should return when `collection` is array and `pred` is a function', function () {
             expect(_.some(array, function (val) { return val % 2 === 1; })).to.be.true;
-        });
-
-        it('should should return `false` when `pred` is a function', function () {
             expect(_.some(array, function (val) { return val % 2 === 0; })).to.be.false;
         });
 
-        it('should should return `true` when `pred` is a value', function () {
-            expect(_.some(array, 3)).to.be.true;
+        it('should return when `collection` is object and `pred` is a function', function () {
+            expect(_.some(object, function (val) { return val % 2 === 1; })).to.be.true;
+            expect(_.some(object, function (val) { return val % 2 === 0; })).to.be.false;
         });
 
-        it('should should return `false` when `pred` is a value', function () {
-            expect(_.some(array, 4)).to.be.false;
+        it('should throw when `pred` is a value', function () {
+            expect(function () { _.some(array, 3); }).to.throw(TypeError);
+        });
+
+        it('should throw when `pred` is a object', function () {
+            expect(function () { _.some(array, { a: 1, b: 2 }); }).to.throw(TypeError);
         });
     });
 

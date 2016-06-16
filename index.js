@@ -377,19 +377,13 @@ _.map = function (arr, fn) {
 };
 
 _.reject = function (colleciton, pred) {
-    var toPred,
-        result = [];
+    var result = [];
 
-    if (!_.isFunction(pred)) {
-        toPred = function (val) {
-            return val === pred;
-        };
-    } else {
-        toPred = pred;
-    }
+    if (!_.isFunction(pred))
+        throw new TypeError('pred should be a function.');
 
     _.forEach(colleciton, function (val, key) {
-        if (false === toPred(val, key, colleciton))
+        if (false === pred(val, key, colleciton))
             result.push(colleciton[key]);
     });
 
@@ -397,20 +391,13 @@ _.reject = function (colleciton, pred) {
 };
 
 _.some = function (colleciton, pred) {
-    var toPred,
-        has = false;
+    var has = false;
 
-    if (!_.isFunction(pred)) {
-        toPred = function (val) {
-            // [TODO] if val and pred are objects
-            return val === pred;
-        };
-    } else {
-        toPred = pred;
-    }
+    if (!_.isFunction(pred)) 
+        throw new TypeError('pred should be a function.');
 
     _.forEach(colleciton, function (val, key) {
-        if (true === toPred(val, key, colleciton)) {
+        if (true === pred(val, key, colleciton)) {
            has = true;
            return false;
         }
