@@ -41,75 +41,38 @@ console.log(_.isArray('hello'));    // false
 <a name="APIs"></a>
 ## 4. APIs
 
-* [_.isNull()](#API_isNull)
-* [_.isNil()](#API_isNil)
-* [_.isUndefined()](#API_isUndefined)
-* [_.isNaN()](#API_isNaN)
-* [_.isArray()](#API_isArray)
-* [_.isBoolean()](#API_isBoolean)
-* [_.isBuffer()](#API_isBuffer)
-* [_.isFunction()](#API_isFunction)
-* [_.isInteger()](#API_isInteger)
-* [_.isNumber()](#API_isNumber)
-* [_.isObject()](#API_isObject)
-* [_.isPlainObject()](#API_isPlainObject)
-* [_.isString()](#API_isString)
-
-* [_.has()](#API_has)
-* [_.assign()](#API_assign)
-* [_.keys()](#API_keys)
-* [_.values()](#API_values)
-* [_.get()](#API_get)
-* [_.set()](#API_set)
-* [_.omit()](#API_omit)
-* [_.pick()](#API_pick)
-* [_.merge()](#API_merge)
-* [_.forOwn()](#API_forOwn)
-
-* [_.includes()](#API_includes)
-* [_.size()](#API_size)
-* [_.find()](#API_find)
-* [_.filter()](#API_filter)
-* [_.forEach()](#API_forEach)
-
-* [_.concat()](#API_concat)
-* [_.drop()](#API_drop)
-* [_.dropRight()](#API_dropRight)
-* [_.findIndex()](#API_findIndex)
-* [_.indexOf()](#API_indexOf)
-* [_.join()](#API_join)
-* [_.last()](#API_last)
-* [_.pull()](#API_pull)
-* [_.slice()](#API_slice)
-* [_.map()](#API_map)
-* [_.take()](#API_take)
-* [_.reject()](#API_reject)
-* [_.some()](#API_some)
-* [_.remove()](#API_remove)
-
-* [_.bind()](#API_bind)
-* [_.delay()](#API_delay)
-
-* [_.parseInt()](#API_parseInt)
-* [_.split()](#API_split)
-* [_.camelCase()](#API_camelCase)
-* [_.endsWith()](#API_endsWith)
-* [_.replace()](#API_replace)
-* [_.startsWith()](#API_startsWith)
-* [_.toLower()](#API_toLower)
-* [_.toUpper()](#API_toUpper)
-* [_.lowerCase()](#API_lowerCase)
-* [_.lowerFirst()](#API_lowerFirst)
-* [_.upperCase()](#API_upperCase)
-* [_.upperFirst()](#API_upperFirst)
-
-* [_.isEmpty()](#API_isEmpty)
-* [_.isEqual()](#API_isEqual)
-* [_.clone()](#API_clone)
-* [_.cloneDeep()](#API_cloneDeep)
-* [_.now()](#API_now)
-
-*************************************************
+* Type checking
+    * [_.isNull()](#API_isNull), [_.isNil()](#API_isNil), [_.isUndefined()](#API_isUndefined), [_.isNaN()](#API_isNaN)  
+    * [_.isArray()](#API_isArray), [_.isObject()](#API_isObject), [_.isPlainObject()](#API_isPlainObject), [_.isBuffer()](#API_isBuffer)  
+    * [_.isBoolean()](#API_isBoolean),[_.isNumber()](#API_isNumber), [_.isString()](#API_isString), [_.isInteger()](#API_isInteger), [_.isFunction()](#API_isFunction)  
+  
+* String
+    * [_.parseInt()](#API_parseInt)  
+    * [_.startsWith()](#API_startsWith), [_.endsWith()](#API_endsWith)  
+    * [_.split()](#API_split), [_.replace()](#API_replace)  
+    * [_.camelCase()](#API_camelCase), [_.toLower()](#API_toLower), [_.toUpper()](#API_toUpper), [_.lowerCase()](#API_lowerCase), [_.upperCase()](#API_upperCase), [_.lowerFirst()](#API_lowerFirst), [_.upperFirst()](#API_upperFirst)  
+  
+* Object/Collection
+    * [_.has()](#API_has), [_.includes()](#API_includes)  
+    * [_.keys()](#API_keys), [_.values()](#API_values), [_.size()](#API_size)  
+    * [_.assign()](#API_assign), [_.merge()](#API_merge), [_.omit()](#API_omit), [_.pick()](#API_pick)  
+    * [_.get()](#API_get), [_.set()](#API_set), [_.find()](#API_find), [_.filter()](#API_filter)  
+    * [_.forOwn()](#API_forOwn), [_.forEach()](#API_forEach)  
+  
+* Array
+    * [_.some()](#API_some)  
+    * [_.findIndex()](#API_findIndex), [_.indexOf()](#API_indexOf)  
+    * [_.concat()](#API_concat), [_.join()](#API_join)  
+    * [_.slice()](#API_slice), [_.last()](#API_last), [_.pull()](#API_pull), [_.take()](#API_take), [_.drop()](#API_drop), [_.dropRight()](#API_dropRight)  
+    * [_.map()](#API_map), [_.reject()](#API_reject), [_.remove()](#API_remove)  
+  
+* Function
+    * [_.bind()](#API_bind), [_.delay()](#API_delay)
+  
+* Utility
+    * [_.isEmpty()](#API_isEmpty), [_.isEqual()](#API_isEqual)  
+    * [_.clone()](#API_clone), [_.cloneDeep()](#API_cloneDeep)  
+    * [_.now()](#API_now)  
 
 
 *************************************************
@@ -1566,3 +1529,187 @@ result = _.find(users, function (user) {
 console.log(result);
 // log { 'user': 'robb', 'age': 25, 'active': false }
 ```
+=======
+<a name="API_now"></a>
+### _.now()
+
+This method is based on [Date.now](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now). It returns the numeric value corresponding to the current time - the number of milliseconds elapsed since 1 January 1970 00:00:00 UTC.  
+
+**Arguments:**  
+
+* **_none_**  
+
+**Returns:**  
+
+* (_Number_): Milliseconds elapsed since 1 January 1970 00:00:00 UTC up until now.  
+
+**Examples:**  
+
+```js
+_.now();    // 1466047513349
+```
+
+*************************************************
+<a name="API_now"></a>
+### _.parseInt(string[, radix])
+
+Parses a string to an integer with the specified radix. This method is based on the global [parseInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt).  
+
+**Arguments:**  
+
+* (_String_): The string to parse.  
+
+**Returns:**  
+
+* (_Number_): The parsed numeric value, or NaN if parsing fails.  
+
+**Examples:**  
+
+```js
+_.parseInt(" 0xF", 16);     // 15
+_.parseInt("17", 8));       // 15
+_.parseInt("-F", 16));      // -15
+_.parseInt(-15.1, 10));     // -15
+_.parseInt("-1111", 2));    // -15
+_.parseInt("hello", 16);    // NaN
+_.parseInt("546", 2);       // NaN
+_.parseInt([], 16);         // NaN
+_.parseInt({}, 16);         // NaN
+_.parseInt(true, 16);        // NaN
+```
+
+*************************************************
+<a name="API_isEmpty"></a>
+### _.isEmpty(value)
+
+Check if the vlaue is an empty object. An object is empty if it has no own enumerable properties.  
+`null` is empty. Array-like values such as arguments objects, arrays, buffers, or strings are considered empty if they have a length of 0.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to check.  
+
+**Returns:**  
+
+* (_Boolean_): `true` if it is empty, otherwise `false`.  
+
+**Examples:**  
+
+```js
+function X () {}
+X.prototype.someProp = 0;
+
+function Y (name) {
+    this.name = name;
+}
+
+_.isEmpty({});      // true
+_.isEmpty(new X()); // true
+_.isEmpty([]);      // true
+_.isEmpty('');      // true
+
+function foo() {
+    console.log(_.isEmpty(arguments));
+}
+
+foo();                  // true
+foo('a', 2, 'hello');   // false
+
+_.isEmpty({ x: 1 });            // false
+_.isEmpty(new Y('busyman'));    // false
+_.isEmpty([ 2 ]);               // false
+_.isEmpty('hello');             // false
+```
+
+*************************************************
+<a name="API_isEqual"></a>
+### _.isEqual(value, other)
+
+Check if the tow given values are deeply equal to each other.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to compare.  
+1. `other` (_*_): The other value to compare.  
+
+**Returns:**  
+
+* (_Boolean_): `true` if the values are deeply equal, otherwise `false`.  
+
+**Examples:**  
+
+```js
+var obj1 = {
+        x: 1,
+        y: [ 1, 2, 3 ],
+        z: {
+            m: 'hello',
+            n: { p: 2, q: [ 'foo', 'bar' ] }
+        }
+    },
+    obj2 = {
+        x: 1,
+        y: [ 1, 2, 3 ],
+        z: {
+            m: 'hello',
+            n: { p: 2, q: [ 'foo', 'bar' ] }
+        }
+    },
+
+_.isEqual(obj1, 'hi' );     // false
+_.isEqual(obj1, {
+    x: 1,
+    y: [ 1, 2, 3 ]
+});                         // false
+
+_.isEqual(obj1, obj2 );     // true
+console.log(obj1 === obj2); // false
+```
+
+*************************************************
+<a name="API_clone"></a>
+### _.clone(value)
+Creates a shallow copy of the value.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to clone.  
+
+**Returns:**  
+
+ * (_*_): The shallow cloned value.  
+
+**Examples:** 
+
+```js
+var objects = [ { x: 1 }, { y: 2 } ];
+
+var shallow = _.clone(objects);
+
+console.log(shallow[0] === objects[0]); // true
+```
+
+*************************************************
+<a name="API_cloneDeep"></a>
+### _.cloneDeep(value)
+Creates a deep clone of the value.  
+
+**Arguments:**  
+
+1. `value` (_*_): The value to clone.  
+
+**Returns:**  
+
+ * (_*_): The deeply cloned value.  
+
+**Examples:** 
+
+```js
+var objects = [ { x: 1 }, { y: 2 } ];
+
+var deep = _.clone(objects);
+
+console.log(deep[0] === objects[0]); // false
+```
+
+*************************************************
