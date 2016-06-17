@@ -1,6 +1,6 @@
 {
   "name": "busyman",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A lodash-like JavaScript utility library",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,20 @@
     "url": "git+https://github.com/simenkid/busyman.git"
   },
   "author": "Simen Li",
+  "contributors": [
+    {
+      "name": "Hedy Wang",
+      "email": "hedywings@gmail.com"
+    },
+    {
+      "name": "Peter Yi",
+      "email": "peter.eb9@gmail.com"
+    },
+    {
+      "name": "Jack Wu",
+      "email": "jackchased@gmail.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/simenkid/busyman/issues"
