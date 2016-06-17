@@ -351,4 +351,42 @@ describe('Methods of type checking', function() {
             expect(_.isPlainObject(new X('foo'))).to.be.false;
         });
     });
+
+    describe('#_.isArguments', function() {
+        it('should be a function', function () {
+            expect(_.isArguments).to.be.a('function');
+        });
+
+        it('should return true if input is an arguments', function () {
+            function x () {
+                expect(_.isArguments(arguments)).to.be.true;
+            };
+            x();
+        });
+
+        it('should return false if input is an ordinary object', function () {
+            expect(_.isArguments({})).to.be.false;
+        });
+
+        it('should return false if input is an constructed object', function () {
+            function Foo() {}
+            expect(_.isArguments(new Foo())).to.be.false;
+        });
+
+        it('should return false if input is an array', function () {
+             expect(_.isArguments([])).to.be.false;
+        });
+
+        it('should return false if input is with other kinds of data type', function () {
+             expect(_.isArguments(null)).to.be.false;
+             expect(_.isArguments(undefined)).to.be.false;
+             expect(_.isArguments()).to.be.false;
+             expect(_.isArguments(NaN)).to.be.false;
+             expect(_.isArguments(true)).to.be.false;
+             expect(_.isArguments(new Date())).to.be.false;
+             expect(_.isArguments('xxx')).to.be.false;
+             expect(_.isArguments(3)).to.be.false;
+             expect(_.isArguments(3.14)).to.be.false;
+        });
+    });
 });

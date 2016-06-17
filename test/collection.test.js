@@ -4,7 +4,7 @@ var expect = require('chai').expect,
 describe('Methods of collection', function() {
     describe('#_.forEach', function () {
         var obj = { a: 0, b: 1, c: 'x', d: '2' },
-            arr = [ 'x', 'y', 3, '0' ];;
+            arr = [ 'x', 'y', 3, '0' ];
 
         it('should be a function', function () {
             expect(_.forEach).to.be.a('function');
@@ -59,6 +59,19 @@ describe('Methods of collection', function() {
             expect(vals).to.be.deep.equal([ 'x', 'y', 3, '0' ]);
             expect(keys).to.be.deep.equal([ 0, 1, 2, 3 ]);
             expect(collection).to.be.deep.equal(arr);
+        });
+
+        it ('should pass numeric index to iteratee if collection is an arguments', function () {
+            var allNumericIndex = true;
+            function foo() {
+                _.forEach(arguments, function (v, i, collection) {
+                    if (!_.isNumber(i) || !_.isInteger(i))
+                        allNumericIndex = false;
+                });
+            }
+
+            foo('a', 1, 'hello', {}, []);
+            expect(allNumericIndex).to.be.true;
         });
     });
 

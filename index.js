@@ -224,7 +224,7 @@ _.set = function (obj, path, val) {
 /*** Collection                                                                                ***/
 /*************************************************************************************************/
 _.forEach = function (collection, iter) {
-    if (_.isArray(collection)) {
+    if (_.isArray(collection) || _.isArguments(collection)) {
         // we don't use Array.prototype.forEach, since it cannot early break.
         for (var i = 0, len = collection.length; i < len; i++) {
             if (false === iter(collection[i], i, collection))
@@ -672,6 +672,10 @@ _._mergeTwoObjs = function (dst, src) {
     });
 
     return dst;
+};
+
+_.isArguments = function (arg) {
+    return Object.prototype.toString.call(arg) === "[object Arguments]";
 };
 
 module.exports = _;
