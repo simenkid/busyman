@@ -53,7 +53,7 @@ console.log(_.isArray('hello'));    // false
     * [camelCase](#API_camelCase), [toLower](#API_toLower), [toUpper](#API_toUpper), [lowerCase](#API_lowerCase), [upperCase](#API_upperCase), [lowerFirst](#API_lowerFirst), [upperFirst](#API_upperFirst)  
   
 * Object/Collection
-    * [has](#API_has), [includes](#API_includes)  
+    * [has](#API_has), [includes](#API_includes), [every](#API_every)  
     * [keys](#API_keys), [values](#API_values), [size](#API_size)  
     * [assign](#API_assign), [merge](#API_merge), [omit](#API_omit), [pick](#API_pick)  
     * [get](#API_get), [set](#API_set), [find](#API_find), [filter](#API_filter)  
@@ -705,6 +705,40 @@ _.includes(arr, 4);          // false
 
 _.includes(str, 'eb');       // true
 _.includes(str, 'ese');      // false
+```
+
+*************************************************
+<a name="API_every"></a>
+###_.every(collection, pred)
+Checks if every value in the collection pass the `pred` test.  
+
+**Arguments:**
+
+1. `collection` (*Object* | *Array*): The collection to query.  
+2. `pred` (*Function*): `function (value, key|index, collection) { }`, the function invoked per iteration.  
+     * `value`: The current value being processed in the `collection`.  
+     * `key|index`: The key or index of the current property being processed in the `collection`.  
+     * `collection`: The original `collection`.  
+
+**Returns:**
+
+- (*Boolean*): Returns `true` if every value passes the test, else returns `false`.  
+
+**Examples:**
+
+```js
+var obj = { 'user': 'fred', 'age': 40 },
+    arr = [ 1, 2, 3 ];
+
+_.every(obj, function (v) {
+    return v === 'fred';
+});     // false
+
+_.every(arr, function (v) {
+    return v === 2;
+});     // false
+
+_.every(arr, _.isNumber);   // true
 ```
 
 *************************************************

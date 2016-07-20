@@ -165,4 +165,32 @@ describe('Methods of collection', function() {
             expect(result2).to.be.equal(users[1]);
         });
     });
+
+    describe('#_.every', function () {
+        it('should be a function', function () {
+            expect(_.every).to.be.a('function');
+        });
+
+        it('should return true if [ 1, 2, 3, 4, 5 ] all numbers', function () {
+            var every = _.every([ 1, 2, 3, 4, 5 ], _.isNumber);
+            expect(every).to.be.true;
+        });
+
+        it('should return false if [ 1, "xx", 3, 4, 5 ] all numbers', function () {
+            var every = _.every([ 1, "xx", 3, 4, 5 ], _.isNumber);
+            expect(every).to.be.false;
+        });
+
+        it('should return true if { x: 1, y: 2, z: 3 } all numbers', function () {
+            var every = _.every({ x: 1, y: 2, z: 3 }, _.isNumber);
+            expect(every).to.be.true;
+        });
+
+        it('should return true if { x: 1, y: 1, z: 1 } all numbers', function () {
+            var every = _.every({ x: 1, y: 1, z: 1 }, function (v) {
+                return v === 1;
+            });
+            expect(every).to.be.true;
+        });
+    });
 });

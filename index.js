@@ -304,6 +304,22 @@ _.find = function (colleciton, pred) {
     return result;
 };
 
+_.every = function (colleciton, pred) {
+    var every = true;
+
+    if (!_.isFunction(pred)) 
+        throw new TypeError('pred should be a function.');
+
+    _.forEach(colleciton, function (val, key) {
+        if (false === pred(val, key, colleciton)) {
+            every = false;
+            return false;
+        }
+    });
+
+    return every;
+};
+
 /*************************************************************************************************/
 /*** Array                                                                                     ***/
 /*************************************************************************************************/
