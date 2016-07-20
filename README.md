@@ -709,13 +709,13 @@ _.includes(str, 'ese');      // false
 
 *************************************************
 <a name="API_every"></a>
-###_.every(collection, pred)
-Checks if every value in the collection pass the `pred` test.  
+###_.every(collection, predicate)
+Checks if every value in the collection pass the `predicate` test.  
 
 **Arguments:**
 
 1. `collection` (*Object* | *Array*): The collection to query.  
-2. `pred` (*Function*): `function (value, key|index, collection) { }`, the function invoked per iteration.  
+2. `predicate` (*Function*): `function (value, key|index, collection) { }`, the function invoked per iteration.  
      * `value`: The current value being processed in the `collection`.  
      * `key|index`: The key or index of the current property being processed in the `collection`.  
      * `collection`: The original `collection`.  
