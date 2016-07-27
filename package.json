@@ -1,6 +1,6 @@
 {
   "name": "busyman",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A lodash-like JavaScript utility library",
   "main": "index.js",
   "scripts": {
