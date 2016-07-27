@@ -220,6 +220,48 @@ _.set = function (obj, path, val) {
     return obj;
 };
 
+_.has = function (obj, path) {
+    var has = true,
+        target = obj;
+
+    path = this.toPath(path);
+
+    _.forEach(path, function (key) {
+        if (!_.isObject(target)) {
+            has = false;
+            return false;
+        } else if (!(key in target)) {
+            has = false;
+            return false;
+        } else {
+            target = target[key];
+        }
+    });
+
+    return has;
+};
+
+_.unset = function (obj, path) {
+    var maxIdx = 0,
+        deleted = true,
+        parentObj = obj;
+
+    path = _.toPath(path);
+    maxIdx = path.length - 1;
+
+    _.forEach(path, function (key, i) {
+        if (!_.isObject(parentObj))
+            return false;   // break immediately
+
+        if (i === maxIdx && (key in parentObj))
+            delete parentObj[key];
+        else
+            parentObj = parentObj[key];
+    });
+
+    return deleted;
+};
+
 /*************************************************************************************************/
 /*** Collection                                                                                ***/
 /*************************************************************************************************/

@@ -56,7 +56,7 @@ console.log(_.isArray('hello'));    // false
     * [has](#API_has), [includes](#API_includes), [every](#API_every)  
     * [keys](#API_keys), [values](#API_values), [size](#API_size)  
     * [assign](#API_assign), [merge](#API_merge), [omit](#API_omit), [pick](#API_pick)  
-    * [get](#API_get), [set](#API_set), [find](#API_find), [filter](#API_filter)  
+    * [get](#API_get), [set](#API_set), [unset](#API_unset), [find](#API_find), [filter](#API_filter)  
     * [forOwn](#API_forOwn)  
   
 * Array
@@ -1005,6 +1005,38 @@ _.set(object, 'x.y[0].z'), 'hello');
 // {
 //     x: {
 //         y: [ { z: 'hello' } ]
+//     }
+// }
+```
+
+*************************************************
+<a name="API_unset"></a>
+###_.unset(object, path)
+Delete property from the `object` at the given `path`.  
+
+**Arguments:**
+
+1. `object` (*object*): The object to be unset.  
+2. `path` (*String* | *Array*): The path to the property.  
+
+**Returns:**
+
+- (*Boolean*): `true` of unset, else `false`.  
+
+**Examples:**
+
+```js
+var object = {
+    x: {
+        y: [ { z: 5, m: 'hi' } ]
+    }
+};
+
+_.unset(object, 'x.y[0].z'));   // true
+console.log(object);
+// {
+//     x: {
+//         y: [ { m: 'hi' } ]
 //     }
 // }
 ```

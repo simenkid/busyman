@@ -253,4 +253,45 @@ describe('Methods of object', function() {
 
         });
     });
+
+    describe('#_.unset', function () {
+        var object = { 'a': [ { 'b': { 'c': 3, x: 'hi', y: { z: 'xxx' } } }], b: '2' };
+        var object2 = {
+            x: {
+                y: [ { z: 5, m: 'hi' } ]
+            }
+        };
+
+        it('should be a function', function() {
+            expect(_.unset).to.be.a('function');
+        });
+
+        it('object should be unset with given path', function () {
+            expect(_.unset(object, 'd')).to.be.true;
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': { 'c': 3, x: 'hi', y: { z: 'xxx' } }}] , b: '2' });
+
+            expect(_.unset(object, ['x', '0', 'y', 'z'])).to.be.true;
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': { 'c': 3, x: 'hi', y: { z: 'xxx' }} }], b: '2'});
+
+            expect(_.unset(object, 'a[0].b.c')).to.be.true;
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': { x: 'hi', y: { z: 'xxx' } } }] , b: '2' });
+
+            expect(_.unset(object, 'a[0].b.c')).to.be.true;
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': { x: 'hi', y: { z: 'xxx' } } }] , b: '2' });
+
+            expect(_.unset(object, 'a[0].b.y')).to.be.true;
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': { x: 'hi' } }] , b: '2' });
+
+            expect(_.unset(object, 'a[0]')).to.be.true;
+            expect(object).to.be.deep.equal({ 'a': [] , b: '2' });
+
+            expect(object).to.be.deep.equal({ 'a': [] , b: '2' });
+
+            expect(_.unset(object, 'b')).to.be.true;
+            expect(object).to.be.deep.equal({ 'a': [] });
+
+            expect(_.unset(object2, 'x.y[0].z')).to.be.true;
+            expect(object2).to.be.deep.equal({ x: { y: [ { m: 'hi' } ]} });
+        });
+    });
 });
