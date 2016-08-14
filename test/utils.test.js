@@ -158,6 +158,16 @@ describe('Methods of utils', function() {
             expect(_.isEqual).to.be.a('function');
         });
 
+        it('originObj and originObj should be euqal', function () {
+            expect(_.isEqual(originObj, originObj)).to.be.true;
+            expect(originObj === originObj).to.be.true;
+        });
+
+        it('otherObj5 and otherObj5 should be euqal', function () {
+            expect(_.isEqual(otherObj5, otherObj5)).to.be.true;
+            expect(otherObj5 === otherObj5).to.be.true;
+        });
+        
         it('originObj and otherObj1 should be euqal', function () {
             expect(_.isEqual(originObj, otherObj1)).to.be.true;
             expect(originObj === otherObj1).to.be.false;
