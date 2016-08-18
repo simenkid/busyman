@@ -1,5 +1,5 @@
 # busyman
-A lodash-like JavaScript utility library
+A lightweight and lodash-like JavaScript utility library
 
 [![NPM](https://nodei.co/npm/busyman.png?downloads=true)](https://nodei.co/npm/busyman/)  
 
@@ -21,7 +21,7 @@ A lodash-like JavaScript utility library
 <a name="Overiew"></a>  
 ## 1. Overview  
 
-**busyman** is a lodash-like JS utility library that provides commonly used functions for your convenience.  
+**busyman** is a lightweight and lodash-like JS utility library that provides commonly used functions for your convenience.  
   
 <a name="Installation"></a>
 ## 2. Installation
@@ -769,9 +769,6 @@ _.keys(new Foo);
 
 _.keys([ 1, 2, 3, 4, 5 ]);
 // [ '0', '1', '2', '3', '4' ]
-
-_.keys('hey');
-// [ '0', '1', '2' ]
 ```
 
 *************************************************
