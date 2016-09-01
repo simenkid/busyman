@@ -354,8 +354,7 @@ _.set = function (obj, path, val) {
         allocated = allocated[key];
     });
 
-    if (allocated === undefined || Object.keys(allocated).length === 0)
-        lastObj[lastKey] = val;
+    lastObj[lastKey] = val;
 
     return obj;
 };

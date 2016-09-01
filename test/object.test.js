@@ -252,6 +252,9 @@ describe('Methods of object', function() {
             expect(_.set(object, 'a[0].b.c', 4)).to.be.equal(object);
             expect(object).to.be.deep.equal({ 'a': [{ 'b': { 'c': 4 } }], 'd': 4, 'x': [{ 'y': { 'z': 5 } }] });
 
+            expect(_.set(object, 'a[0].b', 4)).to.be.equal(object);
+            expect(object).to.be.deep.equal({ 'a': [{ 'b': 4 }], 'd': 4, 'x': [{ 'y': { 'z': 5 } }] });
+
         });
     });
 
