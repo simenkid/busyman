@@ -8,14 +8,16 @@ A lightweight and lodash-like JavaScript utility library
 [![npm](https://img.shields.io/npm/l/busyman.svg?maxAge=2592000)](https://www.npmjs.com/package/busyman)
 
 <br />
-## Documentation
-Please visit the [WiKi](https://github.com/simenkid/busyman/wiki).
+  
+## Documentation  
 
-## Installation
+Please visit the [Wiki](https://github.com/simenkid/busyman/wiki).
+
+## Installation  
 
 > $ npm install busyman --save
   
-## Usage
+## Usage  
 
 ```js
 var _ = require('busyman');
@@ -23,6 +25,7 @@ var _ = require('busyman');
 console.log(_.isArray('hello'));    // false
 ```
 
-## License
+## License  
+
 Licensed under [MIT](https://github.com/simenkid/busyman/blob/master/LICENSE).
 
